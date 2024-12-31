@@ -1,113 +1,75 @@
-﻿  Renderer.cpp
-E:\PathTracing - BVH - refract\PathTracing\Tool.hpp(62,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(21,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(84,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(86,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(190,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(200,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(233,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(247,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Boll.hpp(65,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Boll.hpp(69,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(39,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(40,22): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(41,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(42,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(43,23): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(52,53): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(82,17): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(83,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(84,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(85,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(86,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing - BVH - refract\PathTracing\Renderer.cpp(96,61): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  main.cpp
-E:\PathTracing - BVH - refract\PathTracing\Tool.hpp(62,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+﻿  main.cpp
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(62,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(21,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(21,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(84,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(84,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(86,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(86,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(190,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(190,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(200,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(200,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(233,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(233,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Material.hpp(247,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(247,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Boll.hpp(65,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(65,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Boll.hpp(69,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(69,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Plane.hpp(69,18): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Plane.hpp(69,18): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\Plane.hpp(121,29): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\Plane.hpp(121,29): warning C4305: “=”: 从“double”到“float”截断
   (编译源文件“main.cpp”)
   
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(24,50): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(24,45): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(24,40): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(25,13): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(26,19): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(40,53): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(40,48): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(40,43): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(42,22): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(46,27): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(50,22): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(55,194): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(57,52): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(57,47): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(57,42): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(61,57): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(61,52): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(61,47): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(62,20): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(66,34): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(67,43): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(67,29): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(68,24): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(69,43): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(70,28): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing - BVH - refract\PathTracing\main.cpp(79,59): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(30,14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(54,14): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(25,50): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(25,45): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(25,40): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(26,13): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(27,19): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(37,53): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(37,48): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(37,43): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(39,22): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(42,27): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(45,22): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(48,194): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,52): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,47): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,42): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(51,57): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(51,52): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(51,47): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(52,20): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(56,28): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(57,43): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(57,29): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(58,24): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(59,43): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(60,28): warning C4305: “参数”: 从“double”到“float”截断
 x64\Release\Renderer.obj : warning LNK4042: 对象被多次指定；已忽略多余的指定
   正在生成代码
-  92 of 381 functions (24.1%) were compiled, the rest were copied from previous compilation.
+  1 of 399 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    36 functions had inline decision re-evaluated but remain unchanged
+    3 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
-  PathTracing.vcxproj -> E:\PathTracing - BVH - refract\x64\Release\PathTracing.exe
+  PathTracing.vcxproj -> E:\PathTracing\PacthTracing\x64\Release\PathTracing.exe

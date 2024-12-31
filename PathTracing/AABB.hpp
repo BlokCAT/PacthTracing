@@ -14,7 +14,7 @@ private :
 		t2 = t;
 	}
 public:
-	Vector3f pMax, pMin, cen;
+	Vector3f pMax, pMin, cen = (pMax + pMin) / 2;
 	AABB ( ):
 		pMax(0),
 		pMin(0),
@@ -24,9 +24,7 @@ public:
 	{
 		pMax = pmax; 
 		pMin = pmin;
-		cen = (pMax + pMin) / 2;
 	}
-
 	bool IsHitbox(const Ray &ray)
 	{
 		float t_minx, t_miny, t_minz, t_maxx, t_maxy, t_maxz;
