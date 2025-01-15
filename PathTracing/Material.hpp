@@ -4,6 +4,7 @@
 #define RAYTRACING_MATERIAL_H
 #include "Vector.hpp"
 #include <algorithm>
+
 enum  MaterialType
 {
 	DIFFUSE , REFLC , MIRCO  , REFRACT
@@ -11,8 +12,19 @@ enum  MaterialType
 
 class Material
 {
-
 public:
+	Material(Vector3f kd, MaterialType  t) :
+		Kd(kd),
+		mtype(t),
+		islight(false)
+	{}
+	MaterialType mtype;
+	Vector3f Kd;
+	Vector3f lightIntensity;
+	float ior; //这个材质的折射率
+	bool islight = false;
+	float roughness;
+
 	float D_GGX(Vector3f &h, float &r, const  Vector3f& N)
 	{
 		float r2 = r * r;
@@ -89,18 +101,7 @@ public:
 	}
 
 
-	Material( Vector3f kd, MaterialType  t) :
-		Kd(kd),
-		mtype(t),
-		islight(false)
-	{}
-	MaterialType mtype;
-	Vector3f Kd;
-	Vector3f lightIntensity;
-	float ior; //这个材质的折射率
-	bool islight = false;
-	float roughness;
-
+	
 
 	void SetLight(const Vector3f &light_intensity)
 	{

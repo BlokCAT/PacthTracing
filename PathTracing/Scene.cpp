@@ -1,8 +1,9 @@
 #pragma once
 
+
+#include <cstdio>
 #include"Scene.hpp"
 #include "Tool.hpp"
-#include <cstdio>
 extern int MAX_RENDER_DEPTH;
 
 void Scene::BuildAccl()
@@ -41,7 +42,6 @@ void Scene::FindHit( Ray &ray ,  HitPoint &hp)
 		for (int i = 0; i < objs.size(); i++)
 		{
 			objs[i]->getHitPoint(ray, hp);
-			if (hp.happened == false)continue;
 		}
 		return;
 		break;
@@ -54,6 +54,7 @@ void Scene::FindHit( Ray &ray ,  HitPoint &hp)
 }
 
 void Scene::Add( Object *t) { 
+
 	objs.push_back(t); 
 	if (t->m->islight)
 	{
@@ -72,7 +73,6 @@ Vector3f Scene::PathTracing( Ray &ray, int depth)
 	if (MAX_RENDER_DEPTH < 998 && depth >= MAX_RENDER_DEPTH)return L_dir;
 	
 	HitPoint hit_to_scene;
-	hit_to_scene.happened = false;
 	Scene::FindHit(ray , hit_to_scene);
 	if (!hit_to_scene.happened) return Vector3f(0);
 	if (hit_to_scene.m->islight) return hit_to_scene.m->lightIntensity;
@@ -94,7 +94,7 @@ Vector3f Scene::PathTracing( Ray &ray, int depth)
 		if (gs < RussianRoulette)
 		{
 			Vector3f futureDir = mat->GetFutureDir(wi, N);
-			Ray newRay(hit_pos, futureDir);
+			Ray newRay(hit_pos + (N * 0.0001), futureDir);
 			HitPoint test;
 			FindHit(newRay, test);
 			if (test.happened )
@@ -120,19 +120,21 @@ Vector3f Scene::PathTracing( Ray &ray, int depth)
 		Vector3f sampleRayDir = (sample_hit - hit_pos).normalized();
 		float d = (hit_pos - sample_hit).len();
 
-		Ray sampleRay(hit_pos + (N * 0.01), sampleRayDir);
+		Ray sampleRay(hit_pos + (N * 0.0001), sampleRayDir);
 		HitPoint hit_to_sample;
 
 		Scene::FindHit(sampleRay, hit_to_sample);
-
+		//cout << "(" << hit_to_sample.happened << " " << hit_to_sample.m->islight << ")";
 		if (hit_to_sample.happened && hit_to_sample.m->islight)
 		{
 			Vector3f L_i = hit_to_sample.m->lightIntensity;
 			Vector3f brdf1 = mat->GetBRDF(wi, sampleRayDir, N);
 			float cos_theta1 = clamp(0.0,1.0, dotProduct(N, sampleRayDir));
 			float cos_theta2 = clamp(0.0, 1.0, dotProduct(hit_to_sample.hitN, sampleRayDir * -1));
+			//cout << cos_theta1 << "|";
 			if (pdf_L > 0.0001)
 				L_dir = (L_i * brdf1 * cos_theta1 * cos_theta2 / (d * d)) / pdf_L;
+			
 		}
 
 		//计算间接光照
@@ -174,14 +176,15 @@ Vector3f Scene::PathTracing( Ray &ray, int depth)
 			{
 				//取出所有光线在出去的点的信息
 				Vector3f hitpos = test1.hitcoord;
-				Vector3f nn = test1.hitN.normalized();
+				Vector3f nn = test1.hitN.normalized()* -1;
 				Material* mt = test1.m;
 				Vector3f new_wi = (newRay1.dir * -1).normalized();
 				Vector3f futureOutDir = mt->refract(new_wi, nn, mt->ior);
 
-				if (!(!futureOutDir.x && !futureOutDir.y && !futureOutDir.z)) {
+				if (!(!futureOutDir.x && !futureOutDir.y && !futureOutDir.z))
+				{
 					//折射后射出去的光线
-	
+
 					Ray outRay(hitpos + (nn * 0.001), futureOutDir);
 					HitPoint Obj_rfract_hit;
 					FindHit(outRay, Obj_rfract_hit);
@@ -200,7 +203,7 @@ Vector3f Scene::PathTracing( Ray &ray, int depth)
 			
 			//计算折射体表面反射的颜色
 			Vector3f futureDir2 = mat->GetFutureDir(wi, N);
-			Ray newRay2(hit_pos, futureDir2);
+			Ray newRay2(hit_pos + (N * 0.0001), futureDir2);
 			HitPoint test2;
 			FindHit(newRay2, test2);
 			if (test2.happened)

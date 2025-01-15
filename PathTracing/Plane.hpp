@@ -86,7 +86,7 @@ public:
 
 	AABB getAABB() { return this->box; }
 
-	void getHitPoint(Ray &ray, HitPoint &res)const
+	void getHitPoint(Ray &ray, HitPoint &res)
 	{
 		float ans = dotProduct(ray.dir, N);
 		if ( ans >= 0 ) return;

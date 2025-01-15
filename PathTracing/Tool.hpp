@@ -1,4 +1,7 @@
 #pragma once 
+#ifndef PATHTRACING_TOOL_H
+#define PATHTRACING_TOOL_H
+
 #include <cmath>
 #include <random>
 #include <iostream>
@@ -11,6 +14,23 @@
 inline float clamp(const float &lo, const float &hi, const float &v)
 {
 	return std::max(lo, std::min(hi, v));
+}
+
+inline float TriangleArea(Vector3f& v1, Vector3f& v2, Vector3f& v3)
+{
+	Vector3f e1 = v2 - v1, e2 = v3 - v1;
+	return fabs(0.5 * crossProduct(e1, e2).len());
+}
+
+
+inline std::tuple<float, float, float>  computeBarycentric3D
+(Vector3f& v1, Vector3f& v2, Vector3f& v3, Vector3f& hit)
+{
+	float AllArea = TriangleArea(v1, v2, v3);
+	float a1 = TriangleArea(hit, v2, v3) / AllArea;
+	float a2 = TriangleArea(hit, v1, v3) / AllArea;
+	float a3 = TriangleArea(hit, v2, v1) / AllArea;
+	return{ a1, a2, a3 };
 }
 
 inline bool sloveEquation(float a, float b, float c  , float &t1 , float &t2)  //通过这个计算是否有解，有解直接返回算出来的值
@@ -70,3 +90,4 @@ inline void UpdateProgress(float progress)
 	std::cout << "] " << int(progress * 100.0) << " %\r";
 	std::cout.flush();
 };
+#endif // PATHTRACING_TOOL_H

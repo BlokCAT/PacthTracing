@@ -14,8 +14,8 @@ class Object
 public:
 
 	Object (){}
-	Material* m;
-	virtual void getHitPoint( Ray &ray, HitPoint &res)const = 0;
+	Material* m = nullptr;
+	virtual void getHitPoint( Ray &ray, HitPoint &res) = 0;
 	virtual float getAra() = 0;
 	virtual AABB getAABB() = 0;
 	virtual void setAABB() = 0;

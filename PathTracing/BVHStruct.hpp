@@ -11,7 +11,7 @@ class BVHstruct
 {
 public:
 	vector<Object*> objects;
-	BVHnode* root = NULL; 
+	BVHnode* root = nullptr;
 	BVHstruct(){}
 
 	BVHstruct(vector<Object*> objs)

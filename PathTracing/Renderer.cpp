@@ -1,18 +1,16 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
-#include "Scene.hpp"
-#include "Renderer.hpp"
+
 #include <fstream>
-#include <iostream>
-#include <cstdio>
 #include  <omp.h>
 #include <thread>
 #include <mutex>
+#include "Renderer.hpp"
 
 extern char PATH[];
 extern int spp;
 extern int isThread;
-inline float Crad(float deg)
+float Renderer::Crad(float deg)
 {
 	return deg * M_PI / 180.f;
 }

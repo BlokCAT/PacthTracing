@@ -1,9 +1,11 @@
 #pragma once
+#ifndef PATHTRACING_SCEN_H
+#define PATHTRACING_SCEN_H
+#include <vector>
 #include "Vector.hpp"
 #include "Ray.hpp"
 #include "Object.hpp"
 #include "Boll.hpp"
-#include <vector>
 #include "BVHStruct.hpp"
 
 enum BuildAccelerationWay
@@ -21,11 +23,11 @@ public:
 	BuildAccelerationWay method;
 	BVHstruct bvh;
 	Scene ( int a , int b , BuildAccelerationWay m):w(a),h(b), method(m){}
-
 	void BuildAccl() ;
-	Vector3f PathTracing(  Ray &ray, int depth) ;
+	Vector3f PathTracing(Ray &ray, int depth) ;
 	void Add( Object *t);
-	void FindHit( Ray &ray ,  HitPoint &hp) ;
+	void FindHit(Ray &ray ,  HitPoint &hp) ;
 	void sampleLight(HitPoint &hp, float &pdf) ;
 
 };
+#endif // PATHTRACING_SCEN_H

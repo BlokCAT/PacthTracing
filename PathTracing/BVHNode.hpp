@@ -6,17 +6,17 @@
 #include "AABB.hpp"
 struct BVHnode
 {
-	BVHnode* lift = NULL, * right = NULL;
-	Object* obj = NULL;  
+	BVHnode* lift = nullptr, * right = nullptr;
+	Object* obj = nullptr;
 	AABB nodeBox;
 	int objsCount = 0;
 	float area;
 
 	BVHnode()
 	{
-		lift = NULL;
-		right = NULL;
-		obj = NULL;
+		lift = nullptr;
+		right = nullptr;
+		obj = nullptr;
 		area = 0;
 	}
 };

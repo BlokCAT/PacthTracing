@@ -38,7 +38,7 @@ public:
 		m = mm;
 		setAABB();
 	}
-	void getHitPoint( Ray &ray ,  HitPoint &res) const
+	void getHitPoint( Ray &ray ,  HitPoint &res) 
 	{
 		//std::cout << " 求交函数访问成功\n";
 		float t1 = 0.0f , t2 = 0.0f;
@@ -56,7 +56,15 @@ public:
 				res.distance = t1;
 				res.happened = true;
 				res.hitcoord = ray.Xt_pos(t1);
-				res.hitN = getN(res.hitcoord);
+				Vector3f BollNormal = getN(res.hitcoord);
+				if (dotProduct(ray.dir, BollNormal) < 0)
+				{
+					res.hitN = BollNormal;
+				}
+				else
+				{
+					res.hitN = BollNormal * -1;
+				}
 				res.m = m;
 				return;
 

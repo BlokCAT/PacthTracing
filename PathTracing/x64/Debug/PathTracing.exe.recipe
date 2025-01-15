@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>E:\PathTracing - BVH - refract\x64\Debug\PathTracing.exe</FullPath>
+      <FullPath>E:\PathTracing\PacthTracing\x64\Debug\PathTracing.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

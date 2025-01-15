@@ -14,11 +14,10 @@ private :
 		t2 = t;
 	}
 public:
-	Vector3f pMax, pMin, cen = (pMax + pMin) / 2;
+	Vector3f pMax, pMin;
 	AABB ( ):
 		pMax(0),
-		pMin(0),
-		cen(0)
+		pMin(0)
 	{}
 	AABB(Vector3f pmax, Vector3f pmin)
 	{
@@ -44,6 +43,11 @@ public:
 
 		if (time_in <= time_out && time_out >= 0)return true;
 		return false;
+	}
+
+	Vector3f getCen()
+	{
+		return (pMax + pMin) / 2;
 	}
 };
 inline AABB AmalgamateTowBox(const AABB& a, const AABB& b)
