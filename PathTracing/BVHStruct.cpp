@@ -150,6 +150,7 @@ void BVHstruct::gethitposition(Ray &ray, BVHnode *tree , HitPoint &hp)
 				hp.hitcoord = l.hitcoord;
 				hp.hitN = l.hitN;
 				hp.m = l.m;
+				hp.hitColor = l.hitColor;
 			}
 			else
 			{
@@ -158,6 +159,7 @@ void BVHstruct::gethitposition(Ray &ray, BVHnode *tree , HitPoint &hp)
 				hp.hitcoord = r.hitcoord;
 				hp.hitN = r.hitN;
 				hp.m = r.m;
+				hp.hitColor = r.hitColor;
 			}
 			return;
 		}

@@ -22,12 +22,14 @@ public:
 	Vector3f N;
 	Vector3f node1, node2, node3;
 	array<Vector3f, 3> NodeNormal;
+	array<Vector2f, 3> TextureUV;
 	bool isSmoothShading;
 	Triangle(const Vector3f &_node1, const  Vector3f &_node2, 
-		const Vector3f &_node3 ,  Material *_m , bool _isSmoothShading)
+		const Vector3f &_node3 ,  Material *_m , array<Vector3f, 3>& _NnodeNormal ,  bool _isSmoothShading)
 		:node1(_node1), node2(_node2), node3(_node3)
 	{
 		isSmoothShading = _isSmoothShading;
+		NodeNormal = _NnodeNormal;
 		m = _m;
 		e1 = node2 - node1;
 		e2 = node3 - node2;
@@ -36,18 +38,30 @@ public:
 		arae = 0.5 * (crossProduct((e1 * -1), e2).len());
 		setAABB();
 	}
-	Triangle(const Vector3f& _node1, const  Vector3f& _node2, const Vector3f& _node3, Material* _m ,  array<Vector3f, 3> &_NnodeNormal , bool _isSmoothShading)
+	Triangle(const Vector3f& _node1, const  Vector3f& _node2, const Vector3f& _node3, Material* _m , 
+		array<Vector3f, 3> &_NnodeNormal , array<Vector2f, 3> &_TextureUV, bool _isSmoothShading)
 		:node1(_node1), node2(_node2), node3(_node3)
 	{
 		isSmoothShading = _isSmoothShading;
 		m = _m;
 		NodeNormal = _NnodeNormal;  
+		TextureUV = _TextureUV;
 		e1 = node2 - node1;
 		e2 = node3 - node2;
 		e3 = node1 - node3;
 		N = crossProduct(e1, e2).normalized();
 		arae = 0.5 * (crossProduct((e1 * -1), e2).len());
 		setAABB();
+	}
+
+	Vector3f getHitColor(const Vector3f& hitpos)
+	{
+		std::tuple<float, float, float> tup = computeBarycentric3D(node1, node2, node3, hitpos);
+		Vector2f hitUV = (TextureUV[0] * std::get<0>(tup)) + (TextureUV[1] * std::get<1>(tup)) + (TextureUV[2] * std::get<2>(tup));
+		if (m->isTexture)
+			return m->texture.getColorAt(hitUV.x, hitUV.y);
+		else
+			return m->Kd;
 	}
 
 	void getHitPoint(Ray &ray, HitPoint &res)	
@@ -89,11 +103,13 @@ public:
 				res.distance = tmp_t;
 				res.happened = true;
 				res.hitcoord = ray.Xt_pos(tmp_t);
+				//N
 				if (dotProduct(ray.dir, this->N) > 0)
 					res.hitN = this->N *- 1 ;
 				else
 					res.hitN = (this->N * 1 );
 				res.m = m;
+				res.hitColor = getHitColor(res.hitcoord);
 			}
 			else  //通过三角形点的差值算击中点的法线
 			{
@@ -108,7 +124,8 @@ public:
 					res.hitcoord = hit;
 					res.hitN = tempN;
 					res.m = m;
-				}			
+					res.hitColor = getHitColor(res.hitcoord);
+				}
 				else if(this->m->mtype == REFRACT)
 				{
 					res.distance = tmp_t;
@@ -116,7 +133,7 @@ public:
 					res.hitcoord = hit;
 					res.hitN = tempN* -1;
 					res.m = m;
-					
+					res.hitColor = getHitColor(res.hitcoord);
 				}	
 				else
 				{

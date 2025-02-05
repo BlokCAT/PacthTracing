@@ -1,305 +1,121 @@
-﻿  BVHNode.hpp
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-  BVHStruct.cpp
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-  main.cpp
+﻿  main.cpp
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(23,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(129,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(131,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(206,37): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Material.hpp(239,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
 E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(73,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(74,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(77,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(78,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
 E:\PathTracing\PacthTracing\PathTracing\Plane.hpp(69,18): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Plane.hpp(121,29): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\Plane.hpp(123,29): warning C4305: “=”: 从“double”到“float”截断
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(36,14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(38,14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(49,14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(53,14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(73,14): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(87,14): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(944,33): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(33,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(32,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(31,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(36,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.h(937,18): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
 E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(35,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(34,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(34,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(22,50): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(22,45): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(22,40): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(23,13): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(24,19): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(34,53): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(34,48): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(34,43): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(39,27): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(42,22): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(45,194): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(46,52): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(46,47): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(46,42): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(48,57): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(48,52): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(48,47): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,20): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(53,29): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(54,29): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(55,24): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(56,43): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(57,28): warning C4305: “参数”: 从“double”到“float”截断
-  Ray.hpp
-  Renderer.cpp
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(33,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(38,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(37,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(36,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(131,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(130,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(129,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(134,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(133,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(132,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(73,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(77,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(37,19): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(38,22): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(39,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(40,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(41,23): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(50,53): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(80,17): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(81,20): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(82,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(83,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(84,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Renderer.cpp(94,61): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  Renderer.hpp
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(73,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(77,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Renderer.hpp”)
-  
-  Scene.cpp
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(73,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(77,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(29,19): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(30,13): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(97,30): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(106,76): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(123,32): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(146,30): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(154,75): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(170,31): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(188,32): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(198,83): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(206,31): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(215,82): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(23,51): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(23,46): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(23,40): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(24,13): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(25,19): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(35,53): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(35,48): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(35,43): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(40,27): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(43,22): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(46,194): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,52): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,47): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,42): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(51,54): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(51,49): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(51,44): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(52,17): warning C4305: “=”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(55,28): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(56,29): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(57,85): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(57,25): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(57,20): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(58,85): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(58,25): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(59,85): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(59,31): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(59,25): warning C4305: “参数”: 从“double”到“float”截断
+E:\PathTracing\PacthTracing\PathTracing\main.cpp(59,20): warning C4305: “参数”: 从“double”到“float”截断
 x64\Release\Renderer.obj : warning LNK4042: 对象被多次指定；已忽略多余的指定
   正在生成代码
-  Previous IPDB not found, fall back to full compilation.
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(179): warning C4715: “Material::pdf”: 不是所有的控件路径都返回值
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(53): warning C4715: “sloveEquation”: 不是所有的控件路径都返回值
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(212): warning C4715: “Material::GetRefracBRDF”: 不是所有的控件路径都返回值
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(259): warning C4715: “Material::GetBRDF”: 不是所有的控件路径都返回值
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(138): warning C4715: “Material::GetFutureDir”: 不是所有的控件路径都返回值
-  All 1211 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 1203 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    8 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   PathTracing.vcxproj -> E:\PathTracing\PacthTracing\x64\Release\PathTracing.exe

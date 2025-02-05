@@ -10,6 +10,7 @@
 extern char PATH[];
 extern int spp;
 extern int isThread;
+extern bool AntiAliasing;
 float Renderer::Crad(float deg)
 {
 	return deg * M_PI / 180.f;
@@ -18,7 +19,7 @@ float Renderer::Crad(float deg)
 
 void Renderer::Render( Scene &scene)
 {
-	const static Vector3f eyes(0);
+	const static Vector3f eyes( 0.3 , -0.8 , 8 );
 	thread* th = new thread[scene.h];
 	int progress = 0;
 	int totalPix = scene.w * scene.h;
@@ -42,11 +43,17 @@ void Renderer::Render( Scene &scene)
 						x = x - halfH;
 						y = y - halfH;
 
-						Vector3f dir(x, y, 1.0);
-						Ray ray(eyes, dir);
-
 						for (int k = 0; k < spp; k++)
 						{
+							if (AntiAliasing)
+							{
+								float AntiAliasingOffset = (eryPixer / 2.0) * (RandomFloat() - 0.5);
+								
+								x = x  +  AntiAliasingOffset;
+								y = y  +  AntiAliasingOffset;
+							}		
+							Vector3f dir(x, y, 0.6);
+							Ray ray(eyes, dir); 
 							Vector3f temp = (scene.PathTracing(ray, 0) / spp);
 							int idx = (i * scene.w) + j;
 							{
@@ -85,12 +92,16 @@ void Renderer::Render( Scene &scene)
 				x = x - halfH;
 				y = y - halfH;
 
-				Vector3f dir(x, y, 1.0);
-				Ray ray(eyes, dir);
-
-
 				for (int k = 0; k < spp; k++)
 				{
+					if (AntiAliasing)
+					{
+						float AntiAliasingOffset = (eryPixer / 2) * RandomFloat();
+						x = x - (eryPixer / 4.0) + AntiAliasingOffset;
+						y = y - (eryPixer / 4.0) + AntiAliasingOffset;
+					}
+					Vector3f dir(x, y, 1.0);
+					Ray ray(eyes, dir);
 					frbuf[idx] = frbuf[idx] + (scene.PathTracing(ray, 0) / spp);
 				}
 				idx++;

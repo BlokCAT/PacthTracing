@@ -14,12 +14,13 @@ class Object
 public:
 
 	Object (){}
-	Material* m = nullptr;
+	Material* m = new Material();
 	virtual void getHitPoint( Ray &ray, HitPoint &res) = 0;
 	virtual float getAra() = 0;
 	virtual AABB getAABB() = 0;
 	virtual void setAABB() = 0;
-	virtual void SampleLight(HitPoint &hp, float &pdf_L) = 0;
+	virtual void SampleLight(HitPoint& hp, float& pdf_L) = 0;
+	virtual Vector3f getHitColor(const Vector3f &hitpos) = 0;
 };
 
 #endif

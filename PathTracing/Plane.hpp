@@ -88,10 +88,8 @@ public:
 
 	void getHitPoint(Ray &ray, HitPoint &res)
 	{
-		float ans = dotProduct(ray.dir, N);
-		if ( ans >= 0 ) return;
 		Vector3f L = cen - ray.pos;
-		float t = dotProduct(L, N) / ans;
+		float t = dotProduct(L, N) / dotProduct(ray.dir, N);
 		Vector3f hit_pos = ray.pos + (ray.dir * t);
 
 		if (!isInPlane(hit_pos))return;
@@ -100,8 +98,12 @@ public:
 			res.distance = t;
 			res.happened = true;
 			res.hitcoord = hit_pos;
-			res.hitN = N;
+			if (dotProduct(ray.dir, N)< 0 )
+				res.hitN = N;
+			else 
+				res.hitN = N * -1;
 			res.m = m;
+			res.hitColor = getHitColor(res.hitcoord);
 		}
 		return;
 	}
@@ -119,6 +121,10 @@ public:
 		hp.m = m;
 		pdf_L = 1 / getAra();
 		if (pdf_L < 0.001)pdf_L = 0.001;
+	}
+	Vector3f getHitColor(const Vector3f& hitpos)
+	{
+		return m->Kd;
 	}
 };
 #endif

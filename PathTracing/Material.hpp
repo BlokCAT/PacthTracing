@@ -3,29 +3,19 @@
 #ifndef RAYTRACING_MATERIAL_H
 #define RAYTRACING_MATERIAL_H
 #include "Vector.hpp"
+#include "Texture.hpp"
 #include <algorithm>
+#include <string>
 
 enum  MaterialType
 {
-	DIFFUSE , REFLC , MIRCO  , REFRACT
+	DIFFUSE , REFLC , MIRCO  , REFRACT ,BLENDER 
 };
 
 class Material
 {
-public:
-	Material(Vector3f kd, MaterialType  t) :
-		Kd(kd),
-		mtype(t),
-		islight(false)
-	{}
-	MaterialType mtype;
-	Vector3f Kd;
-	Vector3f lightIntensity;
-	float ior; //这个材质的折射率
-	bool islight = false;
-	float roughness;
-
-	float D_GGX(Vector3f &h, float &r, const  Vector3f& N)
+private:
+	float D_GGX(Vector3f& h, float& r, const  Vector3f& N)
 	{
 		float r2 = r * r;
 		float NdotH = clamp(0.0, 1.0, dotProduct(N, h));
@@ -34,13 +24,13 @@ public:
 		return res;
 	}
 
-	float G_s(float &NdotV, float &a)
+	float G_s(float& NdotV, float& a)
 	{
 		float k = (a + 1) * (a + 1) / 8;
 		return NdotV / (NdotV * (1 - k) + k);
 	}
 
-	float G(const Vector3f &i, const Vector3f &o, const Vector3f &N, float &a)
+	float G(const Vector3f& i, const Vector3f& o, const Vector3f& N, float& a)
 	{
 		float NdotI = clamp(0.0, 1.0, dotProduct(N, i));
 		float NdotO = clamp(0.0, 1.0, dotProduct(N, o));
@@ -61,11 +51,54 @@ public:
 		return(B * a.x) + (C * a.y) + (N * a.z);
 	}
 
+public:
+	Material() {};
+	Material(Vector3f kd, MaterialType t) :
+		Kd(kd),
+		mtype(t),
+		islight(false)
+	{}
+	MaterialType mtype;
+	Vector3f Kd;  //Diffuse Color   物体漫反射颜色
+	Vector3f Ks;  //Specular Color  镜面反射的效果强度和颜色
+	Vector3f Ka;  //Ambient Color   环境光颜色，就是没有光照的时候的颜色
+
+	std::string MaterialName ;
+	
+	Texture texture;
+	
+	bool islight = false;
+	bool isTexture = false;
+
+	float roughness = 0.0f;
+	float ior = 0.0f; //这个材质的折射率
+	int Illum = 2;
+	float Ns = 0.0;
+	Vector3f lightIntensity;
+
+
+	//Vector3f getKdat(const Vector3f& hitpos)
+	//{
+	//	if (isTexture)
+	//	{
+	//		std::tuple<float, float, float> tup = computeBarycentric3D( )
+	//			
+	//			computeBarycentric3D
+	//		(Vector3f & v1, Vector3f & v2, Vector3f & v3, Vector3f & hit)
+	//	}
+	//	else return Kd;
+	//}
+
+	void SetLight(const Vector3f& light_intensity)
+	{
+		this->islight = true;
+		this->lightIntensity = light_intensity;
+	}
+
 	Vector3f reflect(const Vector3f &in, const Vector3f &N)
 	{
 		return (in * -1 + ((N * dotProduct(in, N)) * 2.0)).normalized();
 	}
-
 
 	Vector3f refract(const Vector3f &II, const Vector3f &N, const float &ior) 
 	{
@@ -82,12 +115,12 @@ public:
 		// 计算折射后的光线方向
 		float k = 1 - eta * eta * (1 - cosi * cosi);
 		if (k < 0) return Vector3f(0.0f);
-		else{
+		else
+		{
 			// 计算折射光线的方向
 			return (I* eta + ( n * (eta * cosi - sqrtf(k)))).normalized();
 		}
 	}
-
 
 	void fresnel(const Vector3f &in, const Vector3f &N, float &ior, float &kr) //kr是反射的比例
 	{
@@ -100,19 +133,9 @@ public:
 		return;
 	}
 
-
-	
-
-	void SetLight(const Vector3f &light_intensity)
+	Vector3f GetFutureDir(const Vector3f &wi, const Vector3f &N , const MaterialType &_what)
 	{
-		this->islight = true;
-		this->lightIntensity = light_intensity;
-	}
-
-
-	Vector3f GetFutureDir(const Vector3f &wi, const Vector3f &N)
-	{
-		switch (this->mtype)
+		switch (_what)
 		{
 		case MIRCO:
 		case DIFFUSE:
@@ -137,9 +160,9 @@ public:
 		}
 	}
 
-	float pdf(const Vector3f &wi, const Vector3f &wo, const Vector3f &N)
+	float pdf(const Vector3f &wi, const Vector3f &wo, const Vector3f &N ,const MaterialType &_what)
 	{
-		switch (this->mtype)
+		switch (_what)
 		{
 		case MIRCO:
 		case DIFFUSE:
@@ -178,84 +201,47 @@ public:
 		}
 	}
 
-	Vector3f GetRefracBRDF(const Vector3f& wi, const Vector3f& wo, const Vector3f& N , int flag)
+	Vector3f GetRefracBRDF(const Vector3f& wi, const Vector3f& wo, const Vector3f& N )
 	{
-		switch (flag)
-		{
-
-		case 1:
-		{
-			float ans = dotProduct(wo, N);
-			if (ans > 0.0f)
-			{
-				Vector3f res = 1.0 / ans;
-				return res;
-			}
-			return Vector3f(0);
-		}
-		case 2:
-		{
-			float ans = dotProduct(wo, N);
-			if (ans > 0.0f)
-			{
-				Vector3f res = 1.0 / ans;
-				res = (res * Kd);
-				return res;
-			}
-			return Vector3f(0);
-			break;
-		}
-		default:
-			break;
-		}
-
+		if (dotProduct(wo, N)){return 1.0 / dotProduct(wo, N);}
+		return Vector3f(0);
 	}
 
-	Vector3f GetBRDF(const Vector3f &wi, const Vector3f &wo, const Vector3f &N)
+	Vector3f GetDiffuseBRDF(const Vector3f& wi, const Vector3f& wo, const Vector3f& N)
 	{
-		switch (this->mtype)
+		float ans = dotProduct(wo, N);
+		if (ans > 0.0f)
 		{
-		case DIFFUSE:
-		{
-			float ans = dotProduct(wo, N);
-			if (ans > 0.0f)
-			{
-				Vector3f res = Kd / M_PI;
-				return res;
-			}
-			return Vector3f(0.0f);
-			break;
+			Vector3f res = 1 / M_PI;
+			return res;
 		}
-		case REFLC:
-		{
-			float ans = dotProduct(wo, N);
-			if (ans > 0.0f)
-			{
-				Vector3f res = 1.0 / ans;
+		return Vector3f(0.0f);
+	}
 
-				return res;
-			}
-			return Vector3f(0);
-			break;
-		}
-		case MIRCO:
+	Vector3f GetReflectBRDF(const Vector3f& wi, const Vector3f& wo, const Vector3f& N)
+	{
+		float ans = dotProduct(wo, N);
+		if (ans > 0.0f)
 		{
-			float cosalpha = dotProduct(N, wo); //wo是观测方向
-			if (cosalpha > 0.0f) {
-				Vector3f h = (wi + wo).normalized();
-				float F = 0.f;
-				fresnel(wi, N, ior, F);
-				float down = 4 * fabs(clamp(0.0, 1.0, dotProduct(N, wi)) * clamp(0.0, 1.0, dotProduct(N, wi))) + 0.00001;
-				float up = F * G(wi, wo, N, roughness) * D_GGX(h, roughness, N); //F * G * D
-				return  Kd * (up / down); //加上Kd就实现了颜色，当然主函数记得给材质设置Kd
-			}
-			else
-				return Vector3f(0.0f);
-			break;
+			Vector3f res = 1 / ans;
+			return res;
 		}
-		default:
-			break;
+		return Vector3f(0.0f);
+	}
+
+	Vector3f GetMicroBRDF(const Vector3f& wi, const Vector3f& wo, const Vector3f& N)
+	{
+		float cosalpha = dotProduct(N, wo); //wo是观测方向
+		if (cosalpha > 0.0f) {
+			Vector3f h = (wi + wo).normalized();
+			float F = 0.f;
+			fresnel(wi, N, ior, F);
+			float down = 4 * fabs(clamp(0.0, 1.0, dotProduct(N, wi)) * clamp(0.0, 1.0, dotProduct(N, wi))) + 0.00001;
+			float up = F * G(wi, wo, N, roughness) * D_GGX(h, roughness, N); //F * G * D
+			return  (up / down); //加上Kd就实现了颜色，当然主函数记得给材质设置Kd
 		}
+		else
+			return Vector3f(0.0f);
 	}
 
 };

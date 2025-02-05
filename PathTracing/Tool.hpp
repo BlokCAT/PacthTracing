@@ -16,7 +16,7 @@ inline float clamp(const float &lo, const float &hi, const float &v)
 	return std::max(lo, std::min(hi, v));
 }
 
-inline float TriangleArea(Vector3f& v1, Vector3f& v2, Vector3f& v3)
+inline float TriangleArea(const Vector3f& v1, const Vector3f& v2, const Vector3f& v3)
 {
 	Vector3f e1 = v2 - v1, e2 = v3 - v1;
 	return fabs(0.5 * crossProduct(e1, e2).len());
@@ -24,7 +24,7 @@ inline float TriangleArea(Vector3f& v1, Vector3f& v2, Vector3f& v3)
 
 
 inline std::tuple<float, float, float>  computeBarycentric3D
-(Vector3f& v1, Vector3f& v2, Vector3f& v3, Vector3f& hit)
+(const Vector3f& v1, const Vector3f& v2, const Vector3f& v3,const Vector3f& hit)
 {
 	float AllArea = TriangleArea(v1, v2, v3);
 	float a1 = TriangleArea(hit, v2, v3) / AllArea;

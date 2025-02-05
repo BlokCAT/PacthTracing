@@ -74,10 +74,10 @@
     <ClInclude Include="MeshTriangle.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="OBJ_Loader.hpp">
+    <ClInclude Include="OBJ_Loader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MeshTriangleGroup.hpp">
+    <ClInclude Include="Texture.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

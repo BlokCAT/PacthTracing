@@ -16,5 +16,6 @@ public:
 	Vector3f hitN;
 	float distance ;
 	bool happened = false;
+	Vector3f hitColor;
 };
 #endif

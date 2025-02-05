@@ -66,6 +66,7 @@ public:
 					res.hitN = BollNormal * -1;
 				}
 				res.m = m;
+				res.hitColor = getHitColor(res.hitcoord);
 				return;
 
 		}
@@ -82,6 +83,10 @@ public:
 		hp.m = m;	
 		pdf_L = 1.0f / getAra();
 		return;
+	}
+	Vector3f getHitColor(const Vector3f& hitpos)
+	{
+		return m->Kd;
 	}
 };
 #endif
