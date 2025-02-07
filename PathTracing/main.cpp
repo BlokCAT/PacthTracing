@@ -95,9 +95,6 @@ int main()
 	//	cout << res.hitcoord.x << " " << res.hitcoord.y << " " << res.hitcoord.z << endl; 
 	//}
 
-
-
-	
 	//mesh²âÊÔ
 
 	//MeshTriangle test("E:\\PathTracing\\model\\ÈıÀâ×µ.obj", red , false);
@@ -159,5 +156,4 @@ int main()
 	delete red, green, blue, white, micro1, micro2, Refract, jinzi, jinzi2, micro_white, light1, yellow;
 
 	return 0;
-	_CrtDumpMemoryLeaks();
 }
