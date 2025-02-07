@@ -12,9 +12,9 @@
 class Object
 {
 public:
-
 	Object (){}
-	Material* m = new Material();
+	~Object() {}
+	Material* m;
 	virtual void getHitPoint( Ray &ray, HitPoint &res) = 0;
 	virtual float getAra() = 0;
 	virtual AABB getAABB() = 0;

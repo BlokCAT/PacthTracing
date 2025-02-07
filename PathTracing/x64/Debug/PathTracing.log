@@ -1,44 +1,23 @@
 ﻿  BVHNode.hpp
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2027: 使用了未定义类型“std::tuple<float,float,float>”
-  (编译源文件“BVHNode.hpp”)
-  D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(141,7):
-  参见“std::tuple<float,float,float>”的声明
-  
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2079: “computeBarycentric3D”使用未定义的 class“std::tuple<float,float,float>”
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“BVHNode.hpp”)
-  
   BVHStruct.cpp
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+  (编译源文件“BVHNode.hpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2027: 使用了未定义类型“std::tuple<float,float,float>”
+  (编译源文件“BVHNode.hpp”)
+  D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(141,7):
+  参见“std::tuple<float,float,float>”的声明
+  
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2079: “computeBarycentric3D”使用未定义的 class“std::tuple<float,float,float>”
+  (编译源文件“BVHNode.hpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+  (编译源文件“BVHNode.hpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\Texture.hpp(7,10): error C1083: 无法打开包括文件: “opencv2/opencv.hpp”: No such file or directory
+  (编译源文件“BVHNode.hpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“BVHStruct.cpp”)
   
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2027: 使用了未定义类型“std::tuple<float,float,float>”
@@ -52,28 +31,7 @@ E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2079: “compute
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
   (编译源文件“BVHStruct.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“BVHStruct.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Texture.hpp(7,10): error C1083: 无法打开包括文件: “opencv2/opencv.hpp”: No such file or directory
   (编译源文件“BVHStruct.cpp”)
   
   main.cpp
@@ -91,126 +49,38 @@ E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2079: “compute
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Texture.hpp(7,10): error C1083: 无法打开包括文件: “opencv2/opencv.hpp”: No such file or directory
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+  Ray.hpp
+  Renderer.cpp
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+  (编译源文件“Renderer.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+  (编译源文件“Renderer.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\Texture.hpp(7,10): error C1083: 无法打开包括文件: “opencv2/opencv.hpp”: No such file or directory
+  (编译源文件“Renderer.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+  Renderer.hpp
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+  (编译源文件“Renderer.hpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2027: 使用了未定义类型“std::tuple<float,float,float>”
+  (编译源文件“Renderer.hpp”)
+  D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(141,7):
+  参见“std::tuple<float,float,float>”的声明
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2079: “computeBarycentric3D”使用未定义的 class“std::tuple<float,float,float>”
+  (编译源文件“Renderer.hpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+  (编译源文件“Renderer.hpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(73,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
+E:\PathTracing\PacthTracing\PathTracing\Texture.hpp(7,10): error C1083: 无法打开包括文件: “opencv2/opencv.hpp”: No such file or directory
+  (编译源文件“Renderer.hpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(77,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Plane.hpp(69,18): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Plane.hpp(121,29): warning C4305: “=”: 从“double”到“float”截断
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(36,14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(49,14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Triangle.hpp(73,14): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\optional(11): warning STL4038: The contents of <optional> are available only with C++17 or later.
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(211,14): error C2039: "optional": 不是 "std" 的成员
-  (编译源文件“main.cpp”)
-  D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\fstream(20,1):
-  参见“std”的声明
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(211,22): error C2143: 语法错误: 缺少“;”(在“<”的前面)
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(211,22): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(211,45): error C2238: 意外的标记位于“;”之前
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(201,13): error C2065: “MeshMaterial”: 未声明的标识符
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(201,33): error C2039: "nullopt": 不是 "std" 的成员
-  (编译源文件“main.cpp”)
-  D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\fstream(20,1):
-  参见“std”的声明
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(201,33): error C2065: “nullopt”: 未声明的标识符
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(695,41): error C2039: "MeshMaterial": 不是 "objl::Mesh" 的成员
-  (编译源文件“main.cpp”)
-  E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(189,12):
-  参见“objl::Mesh”的声明
-  
-E:\PathTracing\PacthTracing\PathTracing\OBJ_Loader.hpp(944,33): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(34,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(33,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(32,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(37,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(36,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(35,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(22,50): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(22,45): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(22,40): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(23,13): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(24,19): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(34,53): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(34,48): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(34,43): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(39,27): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(42,22): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(45,194): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(46,52): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(46,47): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(46,42): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(48,57): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(48,52): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(48,47): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(49,20): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(53,29): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(54,29): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(55,24): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(56,43): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\main.cpp(57,28): warning C4305: “参数”: 从“double”到“float”截断
   Scene.cpp
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(22,13): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
   (编译源文件“Scene.cpp”)
@@ -226,46 +96,7 @@ E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(26,41): error C2079: “compute
 E:\PathTracing\PacthTracing\PathTracing\Tool.hpp(82,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
   (编译源文件“Scene.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(33,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\Texture.hpp(7,10): error C1083: 无法打开包括文件: “opencv2/opencv.hpp”: No such file or directory
   (编译源文件“Scene.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(96,12): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(98,11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(191,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(201,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(234,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Material.hpp(248,16): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\HitPoint.hpp(12,11): warning C4244: “初始化”: 从“__int64”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(73,39): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Boll.hpp(77,15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-  (编译源文件“Scene.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(29,19): warning C4305: “=”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(30,13): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(97,30): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(106,76): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(123,32): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(146,30): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(154,75): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(170,31): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(188,32): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(198,83): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(206,31): warning C4305: “参数”: 从“double”到“float”截断
-E:\PathTracing\PacthTracing\PathTracing\Scene.cpp(215,82): warning C4305: “参数”: 从“double”到“float”截断
   正在生成代码...

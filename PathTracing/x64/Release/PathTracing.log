@@ -65,22 +65,22 @@ E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(37,35): warning C4244: 
 E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(36,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(129,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(128,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(127,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
+  
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(132,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+  (编译源文件“main.cpp”)
+  
 E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(131,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(130,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(129,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(134,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(133,35): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
-  (编译源文件“main.cpp”)
-  
-E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(132,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
+E:\PathTracing\PacthTracing\PathTracing\MeshTriangle.hpp(130,50): warning C4244: “参数”: 从“long”转换到“float”，可能丢失数据
   (编译源文件“main.cpp”)
   
 E:\PathTracing\PacthTracing\PathTracing\main.cpp(23,51): warning C4305: “参数”: 从“double”到“float”截断
@@ -114,7 +114,7 @@ E:\PathTracing\PacthTracing\PathTracing\main.cpp(59,25): warning C4305: “参�
 E:\PathTracing\PacthTracing\PathTracing\main.cpp(59,20): warning C4305: “参数”: 从“double”到“float”截断
 x64\Release\Renderer.obj : warning LNK4042: 对象被多次指定；已忽略多余的指定
   正在生成代码
-  1 of 1203 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  2 of 1211 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     8 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成

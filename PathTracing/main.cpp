@@ -9,11 +9,11 @@
 #include "Plane.hpp"
 #include "MeshTriangle.hpp"
 #include "Texture.hpp"
-int spp = 200;
-char PATH[999] = "E:/all/EnverimentMAP.ppm";
+int spp = 12;
+char PATH[999] = "E:/all/内存泄露处理结果.ppm";
 string HDRIPATH = "E:\\PathTracing\\model\\HDRI\\room.jpg";
 int MAX_RENDER_DEPTH = 6;
-int sceneHW = 200;
+int sceneHW = 900;
 int isThread = 1;
 bool AntiAliasing = false; //反走样
 int main()
@@ -58,7 +58,7 @@ int main()
 	Plane L2(Vector3f(0.0, 12.3, 44.0), Vector3f(0.0, -1.0, 0.0), Vector3f(0, 0, 1.0), 8.1, light2);
 	Plane L3(Vector3f(8.1, 12.3, 35.6), Vector3f(0.0, -1.0, 0.0), Vector3f(0, 0, 1.0), 8.1, light2);
 
-	MeshTriangle back("E:\\PathTracing\\model\\Scene\\back.obj" , white, false);
+	MeshTriangle back("E:\\PathTracing\\model\\Scene\\back.obj" , white, false); 
 	MeshTriangle top("E:\\PathTracing\\model\\Scene\\top.obj", white, false);
 	MeshTriangle down("E:\\PathTracing\\model\\Scene\\down.obj", white, false);
 	MeshTriangle right("E:\\PathTracing\\model\\Scene\\right.obj", green, false);
@@ -81,7 +81,6 @@ int main()
 	scene.Add(&back);
 	scene.BuildAccl();
 	Renderer r;
-	
 
 	////三角形测试没有问题
 	//HitPoint res;
@@ -152,15 +151,13 @@ int main()
 	//cin >> as;
 	//cout << "start renderer" << endl;
 
-
-
 	auto start = std::chrono::system_clock::now();
 	r.Render(scene);
 	auto stop = std::chrono::system_clock::now();
-
 
 	std::cout << endl <<  "渲染耗时:" << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " seconds\n";
 	delete red, green, blue, white, micro1, micro2, Refract, jinzi, jinzi2, micro_white, light1, yellow;
 
 	return 0;
+	_CrtDumpMemoryLeaks();
 }

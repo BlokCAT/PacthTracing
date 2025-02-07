@@ -13,7 +13,7 @@ private:
 	float area = 0;
 	AABB box;
 	BVHstruct meshBVH;
-
+	Material * tempMat = new Material();
 public:
 	bool isSmoothShading = false;
 	vector<Triangle> triangles;
@@ -77,11 +77,10 @@ public:
 			}
 
 			meshBVH.BuiltBVH(1);
-			cout << "这个指定材质颜色的模型有的面数量：" << triangles.size() << endl;
 		}
 		else
 		{
-			cout << "Failed to Load File";
+			std::cerr << "Failed to Load OBJ File";
 		}
 	}
 
@@ -94,22 +93,21 @@ public:
 		bool loadout = Loader.LoadFile(path);
 		if (loadout)
 		{
-
 			objl::Mesh curMesh = Loader.LoadedMeshes[0];
 			cout << "MeshTriangl::正在判断是否有纹理" << endl;
 			if (curMesh.MeshMaterial.map_Kd != "")
 			{
 				cout << "OBJ有纹理" << endl;
-				m->mtype = BLENDER;
-				m->isTexture = true;
-				m->ior = curMesh.MeshMaterial.Ni; //反射用不到ior
-				m->Ka = Vector3f(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z);
-				m->Ks = Vector3f(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z);
-				m->Illum = curMesh.MeshMaterial.illum;
-				m->Ns = curMesh.MeshMaterial.Ns;
-				m->texture = Texture(curMesh.MeshMaterial.map_Kd);
-				cout << "纹理加载正确" << endl;
-				cout << "材质全部读取出来了" << endl;
+				tempMat->mtype = BLENDER;
+				tempMat->isTexture = true;
+				tempMat->ior = curMesh.MeshMaterial.Ni; //反射用不到ior
+				tempMat->Ka = Vector3f(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z);
+				tempMat->Ks = Vector3f(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z);
+				tempMat->Illum = curMesh.MeshMaterial.illum;
+				tempMat->Ns = curMesh.MeshMaterial.Ns;
+				tempMat->texture = Texture(curMesh.MeshMaterial.map_Kd);
+				m = tempMat;
+				cout << "mtl材质全部读取出来了" << endl;
 				cout << "正在显示读取出来的w纹理位置：" << m->texture.texture_path<< endl;
 			}
 			else
@@ -122,7 +120,7 @@ public:
 				m->Ks = Vector3f(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z);
 				m->Illum = curMesh.MeshMaterial.illum;
 				m->Ns = curMesh.MeshMaterial.Ns;
-				cout << "材质全部读取出来了" << endl;
+				cout << "mtl材质全部读取出来了" << endl;
 				cout << "正在显示读取出来的Kd的值：" << m->Kd.x << endl;
 			}
 			
@@ -182,6 +180,12 @@ public:
 			cout << "obj模型加载失败";
 		}
 	}
+
+	~MeshTriangle()
+	{
+		delete tempMat;
+	}
+
 	Vector3f getHitColor(const Vector3f &hitpos)
 	{
 		//no use

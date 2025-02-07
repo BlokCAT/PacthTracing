@@ -1,8 +1,8 @@
 e:\pathtracing\pacthtracing\pathtracing\x64\release\vc143.pdb
-e:\pathtracing\pacthtracing\pathtracing\x64\release\main.obj
-e:\pathtracing\pacthtracing\pathtracing\x64\release\renderer.obj
 e:\pathtracing\pacthtracing\pathtracing\x64\release\scene.obj
+e:\pathtracing\pacthtracing\pathtracing\x64\release\renderer.obj
 e:\pathtracing\pacthtracing\pathtracing\x64\release\ray.obj
+e:\pathtracing\pacthtracing\pathtracing\x64\release\main.obj
 e:\pathtracing\pacthtracing\pathtracing\x64\release\bvhstruct.obj
 e:\pathtracing\pacthtracing\pathtracing\x64\release\bvhnode.obj
 e:\pathtracing\pacthtracing\x64\release\pathtracing.exe

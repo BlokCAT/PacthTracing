@@ -11,6 +11,16 @@ void BVHstruct::BuiltBVH( int t )
 	return;
 }
 
+void BVHstruct::deleteNode(BVHnode* node)
+{
+	if (node)
+	{
+		if (node->lift)deleteNode(node->lift);
+		if (node->right)deleteNode(node->right);
+		delete node;
+	}
+}
+
 int BVHstruct::getnextTurn(int now)
 {
 	if (now == 3)return 1;

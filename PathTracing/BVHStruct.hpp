@@ -18,7 +18,13 @@ public:
 	{
 		objects = objs;
 	}
-	~BVHstruct(){}
+	~BVHstruct()
+	{
+		if (root){
+			deleteNode(root);
+		}
+	}
+	void deleteNode(BVHnode* node);
 	int getnextTurn(int now);
 	void BuiltBVH( int t);
 	BVHnode* recursiveBuildBVH(vector<Object*> objs , int tt); //当前需要创建的节点的

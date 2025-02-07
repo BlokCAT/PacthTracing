@@ -31,7 +31,7 @@ public:
 
 public: 
 	Boll(){}
-	Boll(Vector3f c, float rr, Material* mm)
+	Boll(Vector3f c, float rr, Material *mm)
 	{
 		cen = c;
 		r = rr;
