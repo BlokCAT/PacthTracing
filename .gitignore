@@ -1,0 +1,31 @@
+# Visual Studio IDE
+.vs/
+
+# Build outputs
+x64/
+**/x64/
+
+# Build artifacts
+*.exe
+*.pdb
+*.ilk
+*.idb
+*.iobj
+*.ipdb
+*.log
+*.tlog
+
+# User-specific VS settings
+*.user
+
+# Claude AI
+.claude/
+
+# Reference code (not part of the project)
+参考代码/
+cankaodaima/
+
+# Large HDRI images (76MB, too big for git)
+# Get them separately if you need HDRI background
+model/HDRI/*.exr
+model/HDRI/*.jpg

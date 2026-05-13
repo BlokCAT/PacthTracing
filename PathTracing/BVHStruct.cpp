@@ -27,7 +27,7 @@ int BVHstruct::getnextTurn(int now)
 	return now + 1;
 }
 
-BVHnode* BVHstruct::recursiveBuildBVH(vector<Object*> objs, int tt) //µ±Ç°ĞèÒª´´½¨µÄ½ÚµãµÄ
+BVHnode* BVHstruct::recursiveBuildBVH(vector<Object*> objs, int tt) //å½“å‰éœ€è¦åˆ›å»ºçš„èŠ‚ç‚¹çš„
 {
 	BVHnode* new_node = new BVHnode();
 	AABB new_aabb;
@@ -39,7 +39,7 @@ BVHnode* BVHstruct::recursiveBuildBVH(vector<Object*> objs, int tt) //µ±Ç°ĞèÒª´´
 		new_node->nodeBox = new_aabb;
 		new_node->objsCount = 1;
 		new_node->obj = objs[0];
-		//std::cout << "Ò»¸öÒ¶×Ó½Úµã\n";
+		//std::cout << "ä¸€ä¸ªå¶å­èŠ‚ç‚¹\n";
 		return new_node;
 	}
 	else if (objs.size() == 2)
@@ -177,7 +177,7 @@ void BVHstruct::gethitposition(Ray &ray, BVHnode *tree , HitPoint &hp)
 }
 
 
-void BVHstruct::getHitposition( Ray &ray , HitPoint &hp) //¶ÔÍâ½Ó¿Ú
+void BVHstruct::getHitposition( Ray &ray , HitPoint &hp) //å¯¹å¤–æ¥å£
 {
 	if (objects.size() == 0) return;
 	gethitposition(ray, root , hp);
@@ -189,7 +189,7 @@ void BVHstruct::samplelight(float now_area, HitPoint &hp, float &pdf_L, BVHnode*
 	// set it in the future
 }
 
-void  BVHstruct::SampleLight(HitPoint &hp, float &pdf_L) //¶ÔÍâ½Ó¿Ú
+void  BVHstruct::SampleLight(HitPoint &hp, float &pdf_L) //å¯¹å¤–æ¥å£
 {
 	/*float all_area = root->area;
 	float gs = RandomFloat();

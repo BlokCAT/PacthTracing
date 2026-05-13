@@ -10,16 +10,16 @@
 #include "MeshTriangle.hpp"
 #include "Texture.hpp"
 int spp = 12;
-char PATH[999] = "E:/all/ÄÚ´æĞ¹Â¶´¦Àí½á¹û.ppm";
-string HDRIPATH = "E:\\PathTracing\\model\\HDRI\\room.jpg";
+char PATH[999] = "./output.ppm";
+string HDRIPATH = "../model\\HDRI\\room.jpg";
 int MAX_RENDER_DEPTH = 6;
 int sceneHW = 900;
 int isThread = 1;
-bool AntiAliasing = false; //·´×ßÑù
+bool AntiAliasing = false; //åèµ°æ ·
 int main()
 {
 	Scene scene(sceneHW, sceneHW,BVH );//w  h
-	//½¨Á¢²ÄÖÊ
+	//å»ºç«‹æè´¨
 	Material* red = new Material(Vector3f(0.83, 0.1, 0.1), DIFFUSE);
 	red->ior = 1.3;
 	red->roughness = 0.2;
@@ -51,19 +51,19 @@ int main()
 	Material* Refract = new Material(Vector3f(0.7, 0.7, 0.7), REFRACT);
 	Refract->ior = 1.30;
 
-	//½¨Á¢ÎïÌå£¨Çò £¬ Ãæ £¬ ¹âÔ´£©
+	//å»ºç«‹ç‰©ä½“ï¼ˆçƒ ï¼Œ é¢ ï¼Œ å…‰æºï¼‰
 	Boll b1(Vector3f(0,  -4.0 + 0.3 , 45.0), 5, red);
 	Boll b4(Vector3f(6.0, -4.0 + 0.3, 34.0), 3, jinzi);
 	Plane L(Vector3f(-8.1, 12.3, 35.0), Vector3f(0.0, -1.0, 0.0), Vector3f(0, 0, 1.0), 8.1, light2);
 	Plane L2(Vector3f(0.0, 12.3, 44.0), Vector3f(0.0, -1.0, 0.0), Vector3f(0, 0, 1.0), 8.1, light2);
 	Plane L3(Vector3f(8.1, 12.3, 35.6), Vector3f(0.0, -1.0, 0.0), Vector3f(0, 0, 1.0), 8.1, light2);
 
-	MeshTriangle back("E:\\PathTracing\\model\\Scene\\back.obj" , white, false); 
-	MeshTriangle top("E:\\PathTracing\\model\\Scene\\top.obj", white, false);
-	MeshTriangle down("E:\\PathTracing\\model\\Scene\\down.obj", white, false);
-	MeshTriangle right("E:\\PathTracing\\model\\Scene\\right.obj", green, false);
-	MeshTriangle left("E:\\PathTracing\\model\\Scene\\left.obj", red, false);
-	MeshTriangle bunny("E:\\PathTracing\\model\\Scene\\spot.obj" , true);
+	MeshTriangle back("../model\\Scene\\back.obj" , white, false); 
+	MeshTriangle top("../model\\Scene\\top.obj", white, false);
+	MeshTriangle down("../model\\Scene\\down.obj", white, false);
+	MeshTriangle right("../model\\Scene\\right.obj", green, false);
+	MeshTriangle left("../model\\Scene\\left.obj", red, false);
+	MeshTriangle bunny("../model\\Scene\\spot.obj" , true);
 
 	//scene.Add(&triangle1);
 	//scene.Add(&triangle2);
@@ -82,7 +82,7 @@ int main()
 	scene.BuildAccl();
 	Renderer r;
 
-	////Èı½ÇĞÎ²âÊÔÃ»ÓĞÎÊÌâ
+	////ä¸‰è§’å½¢æµ‹è¯•æ²¡æœ‰é—®é¢˜
 	//HitPoint res;
 	//Ray ry( Vector3f (0.1 , 19 , 0.1) , Vector3f( 0 , -1 , 0));
 	//Triangle t(Vector3f(6, 0, 0), Vector3f(0, 3, 8), Vector3f(-6, 0, 0), red);
@@ -95,18 +95,18 @@ int main()
 	//	cout << res.hitcoord.x << " " << res.hitcoord.y << " " << res.hitcoord.z << endl; 
 	//}
 
-	//mesh²âÊÔ
+	//meshæµ‹è¯•
 
-	//MeshTriangle test("E:\\PathTracing\\model\\ÈıÀâ×µ.obj", red , false);
+	//MeshTriangle test("../model\\ä¸‰æ£±æ¤.obj", red , false);
 	//cout <<"MAXXX:" <<  test.getAABB().pMax.showVec() << endl;
 	//cout << "MINNN:" << test.getAABB().pMax.showVec() << endl;
 	//cout << "cen:" << test.getAABB().getCen().showVec() << endl;
 
 	//for (int i = 0; i < test.triangles.size(); i++)
 	//{
-	//	cout << i << ":  " << test.triangles[i].node1.showVec() << "¶¥µã·¨Ïß:" << test.triangles[i].NodeNormal[0].showVec() << endl;
-	//	cout << " :  " << test.triangles[i].node2.showVec() << "¶¥µã·¨Ïß:" << test.triangles[i].NodeNormal[1].showVec() << endl;
-	//	cout << " :  " << test.triangles[i].node3.showVec() << "¶¥µã·¨Ïß:" << test.triangles[i].NodeNormal[2].showVec() << endl;
+	//	cout << i << ":  " << test.triangles[i].node1.showVec() << "é¡¶ç‚¹æ³•çº¿:" << test.triangles[i].NodeNormal[0].showVec() << endl;
+	//	cout << " :  " << test.triangles[i].node2.showVec() << "é¡¶ç‚¹æ³•çº¿:" << test.triangles[i].NodeNormal[1].showVec() << endl;
+	//	cout << " :  " << test.triangles[i].node3.showVec() << "é¡¶ç‚¹æ³•çº¿:" << test.triangles[i].NodeNormal[2].showVec() << endl;
 	//	cout << "N:  " << test.triangles[i].N.showVec() << endl;
 	//}
 
@@ -136,14 +136,14 @@ int main()
 
 
 
-	//Texture ²âÊÔ
+	//Texture æµ‹è¯•
 	//Texture pp("C:\\Users\\DELL\\Desktop\\TEST.png");
 
 	//cout << pp.getColorAt(1.0, 0).showVec() << endl;
 
 
 
-	//cout << " °´ÏÂÈÎÒâ¼ü¿ªÊ¼äÖÈ¾" << endl;
+	//cout << " æŒ‰ä¸‹ä»»æ„é”®å¼€å§‹æ¸²æŸ“" << endl;
 	//int as = 0;
 	//cin >> as;
 	//cout << "start renderer" << endl;
@@ -152,7 +152,7 @@ int main()
 	r.Render(scene);
 	auto stop = std::chrono::system_clock::now();
 
-	std::cout << endl <<  "äÖÈ¾ºÄÊ±:" << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " seconds\n";
+	std::cout << endl <<  "æ¸²æŸ“è€—æ—¶:" << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " seconds\n";
 	delete red, green, blue, white, micro1, micro2, Refract, jinzi, jinzi2, micro_white, light1, yellow;
 
 	return 0;

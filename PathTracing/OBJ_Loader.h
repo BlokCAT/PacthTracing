@@ -1071,7 +1071,7 @@ namespace objl
 
 					if (temp.size() != 3)
 						continue;
-					std::cout << "ÕýÔÚ¶ÁÈ¡KdµÄÖµ:" << std::stof(temp[0]) << endl;
+					std::cout << "æ­£åœ¨è¯»å–Kdçš„å€¼:" << std::stof(temp[0]) << endl;
 					tempMaterial.Kd.X = std::stof(temp[0]);
 					tempMaterial.Kd.Y = std::stof(temp[1]);
 					tempMaterial.Kd.Z = std::stof(temp[2]);
@@ -1145,7 +1145,7 @@ namespace objl
 
 			// Push Back loaded Material
 			LoadedMaterials.push_back(tempMaterial);
-			std::cout << "²ÄÖÊ·Å½øÈ¥ÁË" << endl;
+			std::cout << "æè´¨æ”¾è¿›åŽ»äº†" << endl;
 			// Test to see if anything was loaded
 			// If not return false
 			if (LoadedMaterials.empty())

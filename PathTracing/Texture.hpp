@@ -12,7 +12,7 @@ public:
     std::string texture_path;
     cv::Mat image;  //use opencv
 
-    // ¹¹Ôìº¯Êı  VB
+    // æ„é€ å‡½æ•°  VB
     Texture() {};
     Texture(const std::string &pngPath)
     {
@@ -20,13 +20,13 @@ public:
         image = cv::imread(texture_path, cv::IMREAD_COLOR);
         if (image.empty()) 
         {
-            std::cerr << "Texture::ÎŞ·¨¶ÁÈ¡ÎÆÀíÍ¼Ïñ" << std::endl;
+            std::cerr << "Texture::æ— æ³•è¯»å–çº¹ç†å›¾åƒ" << std::endl;
         }
     };
 
 
 
-    // Ê¹ÓÃOpenCV»ñÈ¡ÎÆÀí×ø±ê (u, v) ¶ÔÓ¦µÄÑÕÉ«
+    // ä½¿ç”¨OpenCVè·å–çº¹ç†åæ ‡ (u, v) å¯¹åº”çš„é¢œè‰²
     Vector3f getColorAt(const float &u, const float &v)
     {
         float x = u * (image.cols - 1);
@@ -35,7 +35,7 @@ public:
         int iy = static_cast<int>(y);
 
         cv::Vec3b color = image.at<cv::Vec3b>(iy, ix);
-        float red = color[2] / 255.0f; // OpenCV ÖĞÑÕÉ«Öµ·¶Î§ÊÇ [0, 255]£¬ĞèÒª×ª»»Îª [0, 1]
+        float red = color[2] / 255.0f; // OpenCV ä¸­é¢œè‰²å€¼èŒƒå›´æ˜¯ [0, 255]ï¼Œéœ€è¦è½¬æ¢ä¸º [0, 1]
         float green = color[1] / 255.0f;
         float blue = color[0] / 255.0f;
         return Vector3f(red, green, blue);

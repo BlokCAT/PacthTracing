@@ -12,7 +12,7 @@ public:
 		distance(std::numeric_limits<long long>::max())
 	{}
 	Vector3f hitcoord;
-	Material* m = nullptr;  //²ÄÖÊ¿ÉÒÔ·µ»ØdiffuseÑÕÉ«»òÕß ÎÆÀíµÄÑÕÉ«
+	Material* m = nullptr;  //æè´¨å¯ä»¥è¿”å›diffuseé¢œè‰²æˆ–è€… çº¹ç†çš„é¢œè‰²
 	Vector3f hitN;
 	float distance ;
 	bool happened = false;

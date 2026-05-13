@@ -27,7 +27,7 @@ public:
 	void deleteNode(BVHnode* node);
 	int getnextTurn(int now);
 	void BuiltBVH( int t);
-	BVHnode* recursiveBuildBVH(vector<Object*> objs , int tt); //µ±Ç°ĞèÒª´´½¨µÄ½ÚµãµÄ
+	BVHnode* recursiveBuildBVH(vector<Object*> objs , int tt); //å½“å‰éœ€è¦åˆ›å»ºçš„èŠ‚ç‚¹çš„
 	void gethitposition(Ray &ray, BVHnode* tree  , HitPoint& hp);
 	void getHitposition( Ray &ray , HitPoint &hp);
 	void samplelight( float now_area , HitPoint &hp, float &pdf_L ,  BVHnode* tree);
