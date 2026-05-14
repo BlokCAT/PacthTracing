@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.21)
-project(PathTracing LANGUAGES CXX)
+project(PathTracing LANGUAGES CXX CUDA)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+set(CMAKE_CUDA_ARCHITECTURES 120)    # RTX 5060 = Blackwell = sm_120
 
 # ---- 源文件 ----
 add_executable(PathTracing
@@ -31,7 +34,7 @@ set_target_properties(opencv_world PROPERTIES
 )
 
 # ---- OpenMP ----
-find_package(OpenMP REQUIRED)
+find_package(OpenMP REQUIRED COMPONENTS CXX)
 
 # ---- 链接 ----
 target_link_libraries(PathTracing PRIVATE
@@ -69,3 +72,7 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/lib/opencv_world4100.dll")
             $<TARGET_FILE_DIR:PathTracing>
     )
 endif()
+
+# ---- CUDA hello world 测试（验证环境后删）----
+add_executable(hello_cuda PathTracing/hello_cuda.cu)
+target_compile_features(hello_cuda PRIVATE cuda_std_17)
