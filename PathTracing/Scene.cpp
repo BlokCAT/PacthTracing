@@ -16,7 +16,7 @@ void Scene::BuildAccl()
 	case BVH:
 		this->bvh.objects = objs;
 		this->bvh.BuiltBVH(1);
-		std::cout << "BVH构建完毕！\n";
+		std::cout << "BVH is done!\n";
 		break;
 	default:
 		break;
@@ -31,6 +31,7 @@ void Scene::sampleLight(HitPoint &hp, float &pdf)
 	if (gs == 1)gs = 0.9;
 	int aimidx = gs * Lightsobjs.size();
 	Lightsobjs[aimidx]->SampleLight(hp, pdf);
+	pdf *= 1.0f / Lightsobjs.size();
 	return;
 }
 

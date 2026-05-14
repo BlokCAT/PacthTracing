@@ -94,10 +94,10 @@ public:
 		if (loadout)
 		{
 			objl::Mesh curMesh = Loader.LoadedMeshes[0];
-			cout << "MeshTriangl::正在判断是否有纹理" << endl;
+			cout << "MeshTriangle:: mat or no mat?" << endl;
 			if (curMesh.MeshMaterial.map_Kd != "")
 			{
-				cout << "OBJ有纹理" << endl;
+				cout << "obj has mat" << endl;
 				tempMat->mtype = BLENDER;
 				tempMat->isTexture = true;
 				tempMat->ior = curMesh.MeshMaterial.Ni; //反射用不到ior
@@ -107,12 +107,12 @@ public:
 				tempMat->Ns = curMesh.MeshMaterial.Ns;
 				tempMat->texture = Texture(curMesh.MeshMaterial.map_Kd);
 				m = tempMat;
-				cout << "mtl材质全部读取出来了" << endl;
-				cout << "正在显示读取出来的w纹理位置：" << m->texture.texture_path<< endl;
+				cout << "Path of mat:" << m->texture.texture_path<< endl;
 			}
 			else
 			{
-				cout << "OBJ没有纹理" << endl;
+				cout << "obj no mat" << endl;
+				m = tempMat;
 				m->mtype = BLENDER;
 				m->ior = curMesh.MeshMaterial.Ni; //反射用不到ior
 				m->Ka = Vector3f(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z);
@@ -120,8 +120,8 @@ public:
 				m->Ks = Vector3f(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z);
 				m->Illum = curMesh.MeshMaterial.illum;
 				m->Ns = curMesh.MeshMaterial.Ns;
-				cout << "mtl材质全部读取出来了" << endl;
-				cout << "正在显示读取出来的Kd的值：" << m->Kd.x << endl;
+				cout << "mtl is read done" << endl;
+				cout << "show kd:" << m->Kd.x << endl;
 			}
 			
 			Vector3f boxMAX(std::numeric_limits<long>::min(),
@@ -173,11 +173,11 @@ public:
 			}
 
 			meshBVH.BuiltBVH(1);
-			cout << "这个材质模型有的面数量：" << triangles.size() << endl;
+			cout << "this objs triangles count:" << triangles.size() << endl;
 		}
 		else
 		{
-			cout << "obj模型加载失败";
+			cout << "obj setdown false!!!";
 		}
 	}
 
@@ -194,7 +194,24 @@ public:
 	void getHitPoint(Ray &ray, HitPoint &res)
 	{
 		meshBVH.gethitposition(ray, meshBVH.root, res);
-	 }
+	}
+
+	float getAra()
+	{
+		return this->area;
+	}
+	AABB getAABB()
+	{
+		return this->box;
+	}
+	void setAABB()
+	{
+		return;
+	}
+	void SampleLight(HitPoint& hp, float& pdf_L)
+	{
+		return;
+	}
 };
 
 

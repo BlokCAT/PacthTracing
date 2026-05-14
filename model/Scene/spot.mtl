@@ -4,9 +4,9 @@
 newmtl 材质.001
 Ns 298.439667
 Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.000000 0.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 3
-map_Kd E:/CG/GAMES101-/GAMES101/Assignment3/Assignment3/Code/models/spot/spot_texture.png

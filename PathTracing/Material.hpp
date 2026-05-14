@@ -236,7 +236,7 @@ public:
 			Vector3f h = (wi + wo).normalized();
 			float F = 0.f;
 			fresnel(wi, N, ior, F);
-			float down = 4 * fabs(clamp(0.0, 1.0, dotProduct(N, wi)) * clamp(0.0, 1.0, dotProduct(N, wi))) + 0.00001;
+			float down = 4 * fabs(clamp(0.0, 1.0, dotProduct(N, wi)) * clamp(0.0, 1.0, dotProduct(N, wo))) + 0.00001;
 			float up = F * G(wi, wo, N, roughness) * D_GGX(h, roughness, N); //F * G * D
 			return  (up / down); //加上Kd就实现了颜色，当然主函数记得给材质设置Kd
 		}

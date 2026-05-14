@@ -1,8 +1,40 @@
 # 蒙特卡洛路径追踪软渲染器开发
 
-此渲染器是学习性质，为了适应不同平台，减少繁琐的环境配置以及保证学习性，本渲染器由纯C++开发，使用自制数据结构CPU计算渲染，（纹理读取使用的`openCV`）
+## 构建
 
-注意缺乏部分实例的obj文件，故本仓库只提供代码参考~~（人话就是本地跑起来需要自己配CV环境和找模型摆位置）~~
+### 前置条件
+
+1. **VS 2022 或 Build Tools**（免费）：[下载](https://visualstudio.microsoft.com/zh-hans/downloads/)，安装时勾选"使用 C++ 的桌面开发"
+2. **CMake**（>= 3.21）：装 VS 时自带，或单独 [下载](https://cmake.org/download/)
+3. **OpenCV 运行时 DLL**：从 OpenCV 4.10.0 Windows 版 `x64/vc16/bin/` 中复制到仓库 `lib/` 目录：
+   - `opencv_world4100.dll`（Release，必须）
+   - `opencv_world4100d.dll`（Debug，可选）
+4. **HDRI 环境贴图**：`model/HDRI/room.jpg`（~28MB，不在仓库中，需单独获取）
+
+### 构建 & 运行
+
+```bash
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+```
+
+exe 在 `build/Release/PathTracing.exe`。**必须在 `PathTracing/` 目录下运行**（源码中的模型路径以此为准）：
+
+```bash
+cd PathTracing
+../build/Release/PathTracing.exe
+```
+
+输出图片在 `SHOW.assets/`。
+
+### IDE 打开
+
+- **VSCode**：装 CMake Tools + C/C++ 扩展，打开仓库根目录即可
+- **VS 2022**：文件 → 打开 → CMake → 选 `CMakeLists.txt`，顶部下拉选 Release
+
+---
+
+此渲染器是学习性质，使用纯 C++ 开发，CPU 计算渲染（纹理读取使用 `openCV`）。
 
 演示视频：
 

@@ -21,6 +21,16 @@ x64/
 # Claude AI
 .claude/
 
+# CMake build output
+build/
+
+# Output PPM images (too large)
+SHOW.assets/*.ppm
+
+# OpenCV runtime DLLs (not portable, get from official release)
+lib/opencv_world4100.dll
+lib/opencv_world4100d.dll
+
 # Reference code (not part of the project)
 参考代码/
 cankaodaima/
