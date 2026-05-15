@@ -82,71 +82,7 @@ int main()
 	scene.BuildAccl();
 	Renderer r;
 
-	////三角形测试没有问题
-	//HitPoint res;
-	//Ray ry( Vector3f (0.1 , 19 , 0.1) , Vector3f( 0 , -1 , 0));
-	//Triangle t(Vector3f(6, 0, 0), Vector3f(0, 3, 8), Vector3f(-6, 0, 0), red);
-	//cout << t.N.x  << " " << t.N.y  << " " << t.N.z;
-	//cout << endl << t.getAra() << endl;
-	//cout << t.getAABB().pMax.x << " " << t.getAABB().pMax.y << " " << t.getAABB().pMax.z << " " << t.getAABB().pMin.x << " " << t.getAABB().pMin.y << " " <<t.getAABB().pMin.z << " " << endl;
-	//t.getHitPoint(ry, res);
-	//if (res.happened)
-	//{
-	//	cout << res.hitcoord.x << " " << res.hitcoord.y << " " << res.hitcoord.z << endl; 
-	//}
 
-	//mesh测试
-
-	//MeshTriangle test("../model\\三棱椎.obj", red , false);
-	//cout <<"MAXXX:" <<  test.getAABB().pMax.showVec() << endl;
-	//cout << "MINNN:" << test.getAABB().pMax.showVec() << endl;
-	//cout << "cen:" << test.getAABB().getCen().showVec() << endl;
-
-	//for (int i = 0; i < test.triangles.size(); i++)
-	//{
-	//	cout << i << ":  " << test.triangles[i].node1.showVec() << "顶点法线:" << test.triangles[i].NodeNormal[0].showVec() << endl;
-	//	cout << " :  " << test.triangles[i].node2.showVec() << "顶点法线:" << test.triangles[i].NodeNormal[1].showVec() << endl;
-	//	cout << " :  " << test.triangles[i].node3.showVec() << "顶点法线:" << test.triangles[i].NodeNormal[2].showVec() << endl;
-	//	cout << "N:  " << test.triangles[i].N.showVec() << endl;
-	//}
-
-	//Vector3f t(1, 0, 0); Vector3f tt(-3, 3, 0); Vector3f ttt(0, 3, 0);
-	//cout << TriangleArea(t, tt, ttt);
-	//cout << "bvhsize:" << test.meshBVH.objects.size() << endl; 
-	
-	/*HitPoint res;
-	Ray ry( Vector3f (0.5 , 19 , 0.5) , Vector3f( 0 , -1 , 0));
-	test.getHitPoint(ry, res);
-	if (res.happened)
-	{
-		cout << "hit point:" << res.hitcoord.x << " " << res.hitcoord.y << " " << res.hitcoord.z << endl;
-		cout << "distance:" << res.distance << endl;
-		cout << "Kd:" << res.m->Kd.x << endl;
-		if(res.m->mtype == DIFFUSE)
-			cout << "type:DIFFUSE" << endl;
-		else
-		{
-			cout << "NO" << endl;
-		}
-	}
-	else
-	{ 
-		cout << "no hit any face!" << endl;
-	}*/
-
-
-
-	//Texture 测试
-	//Texture pp("C:\\Users\\DELL\\Desktop\\TEST.png");
-
-	//cout << pp.getColorAt(1.0, 0).showVec() << endl;
-
-
-
-	//cout << " 按下任意键开始渲染" << endl;
-	//int as = 0;
-	//cin >> as;
-	//cout << "start renderer" << endl;
 
 	auto start = std::chrono::system_clock::now();
 	r.Render(scene);
