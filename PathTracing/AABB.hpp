@@ -7,7 +7,7 @@
 class AABB
 {
 private :
-	void my_swap(float& t1, float& t2) const
+	CUHD void my_swap(float& t1, float& t2) const
 	{
 		float t = t1;
 		t1 = t2;

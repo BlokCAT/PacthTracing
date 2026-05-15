@@ -15,9 +15,11 @@ private:
 	float half_len;
 	float ara;
 	Vector3f Z;
-	Vector3f node1, node2, node3, node4;
 	Vector3f e1 , e2 , e3 , e4; //四条边，顺时针或逆时针
 	AABB box;
+
+public:
+	Vector3f node1, node2, node3, node4;  // GPU 管线需要读取顶点
 
 	void setAABB()
 	{

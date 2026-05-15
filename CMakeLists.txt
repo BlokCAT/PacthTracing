@@ -13,6 +13,7 @@ add_executable(PathTracing
     PathTracing/Renderer.cpp
     PathTracing/Scene.cpp
     PathTracing/BVHStruct.cpp
+    PathTracing/cuda/kernel.cu
 )
 
 # ---- 头文件路径 ----
@@ -47,7 +48,11 @@ if(MSVC)
     set_target_properties(PathTracing PROPERTIES
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"   # /MD /MDd
     )
-    target_compile_options(PathTracing PRIVATE /utf-8)   # 源码为 UTF-8 编码
+    # /utf-8 仅用于 C++ 编译（nvcc 不认识），CUDA 通过 -Xcompiler 传递
+    target_compile_options(PathTracing PRIVATE
+        $<$<COMPILE_LANGUAGE:CXX>:/utf-8>
+        $<$<COMPILE_LANGUAGE:CUDA>:-Xcompiler=/utf-8>
+    )
 endif()
 
 # Console 子系统 + Unicode

@@ -10,7 +10,9 @@ static int countBVHNodes(BVHnode* node) {
 }
 
 // ---- GPU 迁移辅助：递归拍平（预分配好数组后再填）----
-static int flattenRecursive(BVHnode* node, std::vector<GPUBVHNode>& flat) {
+static int flattenRecursive(BVHnode* node, std::vector<GPUBVHNode>& flat,
+	const std::unordered_map<Object*, std::pair<int,int>>& triMap,
+	const std::unordered_map<Object*, int>& sphereMap) {
 	if (!node) return -1;
 
 	int myIdx = (int)flat.size();
@@ -22,25 +24,37 @@ static int flattenRecursive(BVHnode* node, std::vector<GPUBVHNode>& flat) {
 	g.rightChild = -1;
 	g.triStart   = 0;
 	g.triCount   = 0;
+	g.sphereIdx  = -1;
 
 	if (node->lift == nullptr && node->right == nullptr) {
-		// 叶子节点 — 具体三角形区间由 caller（Step 7）填充
-		g.triCount = 1;   // 占位：一个物体
+		// 叶子：查三角形
+		auto itT = triMap.find(node->obj);
+		if (itT != triMap.end()) {
+			g.triStart = itT->second.first;
+			g.triCount = itT->second.second;
+		}
+		// 叶子：查球体
+		auto itS = sphereMap.find(node->obj);
+		if (itS != sphereMap.end()) {
+			g.sphereIdx = itS->second;
+		}
 	} else {
-		g.leftChild  = flattenRecursive(node->lift, flat);
-		g.rightChild = flattenRecursive(node->right, flat);
+		g.leftChild  = flattenRecursive(node->lift, flat, triMap, sphereMap);
+		g.rightChild = flattenRecursive(node->right, flat, triMap, sphereMap);
 	}
 	return myIdx;
 }
 
 // ---- 公开接口：拍平 BVH ----
-std::vector<GPUBVHNode> BVHstruct::flattenBVH() const {
+std::vector<GPUBVHNode> BVHstruct::flattenBVH(
+	const std::unordered_map<Object*, std::pair<int,int>>& triMap,
+	const std::unordered_map<Object*, int>& sphereMap) const {
 	std::vector<GPUBVHNode> result;
 	if (!root) return result;
 
 	int total = countBVHNodes(root);
 	result.reserve(total);
-	flattenRecursive(root, result);
+	flattenRecursive(root, result, triMap, sphereMap);
 	return result;
 }
 

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Vector.cuh"
-#include <cfloat>
-
 // GPU 端交点（原名 HitPoint 跟 .hpp 冲突，改 GPUKitPoint）
 class GPUKitPoint {
 public:
@@ -13,5 +11,5 @@ public:
 	bool happened = false;
 	Vector3f hitColor;
 
-	CUHD GPUKitPoint() : distance(FLT_MAX) {}
+	CUHD GPUKitPoint() : distance(3.402823e+38f) {}  // FLT_MAX
 };

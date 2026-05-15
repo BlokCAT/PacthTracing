@@ -4,6 +4,7 @@
 #define RAYTRACING_BVHSTRUCT_H
 #include "Object.hpp"
 #include <vector>
+#include <unordered_map>
 #include "BVHNode.hpp"
 #include "cuda/BVH.cuh"   // GPUBVHNode 结构体
 using namespace std;
@@ -35,8 +36,9 @@ public:
 	void SampleLight(HitPoint &hp, float &pdf_L);
 
 	// ---- GPU 迁移：拍平 BVH 为扁平数组 ----
-	// 返回值是 GPUBVHNode 的数组（索引型，无指针），构建完可 cudaMemcpy 到 GPU
-	std::vector<struct GPUBVHNode> flattenBVH() const;
+	std::vector<struct GPUBVHNode> flattenBVH(
+		const std::unordered_map<Object*, std::pair<int,int>>& triMap,
+		const std::unordered_map<Object*, int>& sphereMap) const;
 };
 
 #endif
