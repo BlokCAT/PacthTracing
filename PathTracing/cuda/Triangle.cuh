@@ -22,7 +22,7 @@ struct GPUTriangle {
 // ============================================================
 //  三角形命中点颜色（GPU 端，暂跳过纹理直接用 Kd）
 // ============================================================
-CUHD Vector3f TriangleGetColor(
+CUHD inline Vector3f TriangleGetColor(
 	const GPUTriangle& tri, const Vector3f& hitpos,
 	const GPUMaterial* materials)
 {
@@ -42,9 +42,9 @@ CUHD Vector3f TriangleGetColor(
 // ============================================================
 //  Möller-Trumbore 求交（GPU 端，去掉 std::tuple/std::array）
 // ============================================================
-CUHD bool TriangleIntersect(
+CUHD inline bool TriangleIntersect(
 	const GPUTriangle* triangles, int triIdx,
-	const Ray& ray, HitPoint& hp,
+	const Ray& ray, GPUKitPoint& hp,
 	const GPUMaterial* materials)
 {
 	const GPUTriangle& tri = triangles[triIdx];

@@ -7,7 +7,7 @@
 class AABB
 {
 private :
-	void my_swap(float& t1, float& t2)
+	void my_swap(float& t1, float& t2) const
 	{
 		float t = t1;
 		t1 = t2;
@@ -24,7 +24,7 @@ public:
 		pMax = pmax; 
 		pMin = pmin;
 	}
-	CUHD bool IsHitbox(const Ray &ray)
+	CUHD bool IsHitbox(const Ray &ray) const
 	{
 		float t_minx, t_miny, t_minz, t_maxx, t_maxy, t_maxz;
 		float time_in, time_out;

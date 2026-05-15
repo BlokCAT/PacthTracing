@@ -3,7 +3,8 @@
 #include "Vector.cuh"
 #include <cfloat>
 
-class HitPoint {
+// GPU 端交点（原名 HitPoint 跟 .hpp 冲突，改 GPUKitPoint）
+class GPUKitPoint {
 public:
 	Vector3f hitcoord;
 	int materialIdx = -1;
@@ -12,5 +13,5 @@ public:
 	bool happened = false;
 	Vector3f hitColor;
 
-	CUHD HitPoint() : distance(FLT_MAX) {}
+	CUHD GPUKitPoint() : distance(FLT_MAX) {}
 };

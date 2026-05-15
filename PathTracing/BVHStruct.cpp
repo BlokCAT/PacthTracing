@@ -2,6 +2,48 @@
 #include "BVHStruct.hpp"
 #include <algorithm>
 #include <iostream>
+
+// ---- GPU 迁移辅助：递归收集节点数 ----
+static int countBVHNodes(BVHnode* node) {
+	if (!node) return 0;
+	return 1 + countBVHNodes(node->lift) + countBVHNodes(node->right);
+}
+
+// ---- GPU 迁移辅助：递归拍平（预分配好数组后再填）----
+static int flattenRecursive(BVHnode* node, std::vector<GPUBVHNode>& flat) {
+	if (!node) return -1;
+
+	int myIdx = (int)flat.size();
+	flat.push_back({});
+	GPUBVHNode& g = flat.back();
+
+	g.bounds     = node->nodeBox;
+	g.leftChild  = -1;
+	g.rightChild = -1;
+	g.triStart   = 0;
+	g.triCount   = 0;
+
+	if (node->lift == nullptr && node->right == nullptr) {
+		// 叶子节点 — 具体三角形区间由 caller（Step 7）填充
+		g.triCount = 1;   // 占位：一个物体
+	} else {
+		g.leftChild  = flattenRecursive(node->lift, flat);
+		g.rightChild = flattenRecursive(node->right, flat);
+	}
+	return myIdx;
+}
+
+// ---- 公开接口：拍平 BVH ----
+std::vector<GPUBVHNode> BVHstruct::flattenBVH() const {
+	std::vector<GPUBVHNode> result;
+	if (!root) return result;
+
+	int total = countBVHNodes(root);
+	result.reserve(total);
+	flattenRecursive(root, result);
+	return result;
+}
+
 void BVHstruct::BuiltBVH( int t )
 {
 	if (!objects.empty())
