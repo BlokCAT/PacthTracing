@@ -37,7 +37,11 @@ CUHD inline void computeBarycentric3D(
 //  随机数 — GPU 占位接口（写 kernel 时对接 curand）
 // ============================================================
 struct RNGState {
-	unsigned long long state;  // 占位，后续换成 curandState
+	unsigned long long state;
 };
 
-CUHD inline float gpuRand(RNGState&) { return 0.5f; }  // TODO: 接 curand_uniform
+// 简单 LCG 随机数（GPU 可用，后续可换 curand）
+CUHD inline float gpuRand(RNGState& rng) {
+	rng.state = rng.state * 1103515245ULL + 12345ULL;
+	return (float)((rng.state >> 16) & 0x7FFF) / 32768.0f;
+}
