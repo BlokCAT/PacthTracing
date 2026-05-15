@@ -52,7 +52,7 @@ CUHD inline void BVHTraverse(
 					triangles, node.triStart + i,
 					ray, hp, materials);
 			}
-		} else {
+		} else if (node.leftChild >= 0 || node.rightChild >= 0) {
 			// ---- 内部节点：压入子节点 ----
 			if (node.rightChild >= 0) stack[ptr++] = node.rightChild;
 			if (node.leftChild  >= 0) stack[ptr++] = node.leftChild;
