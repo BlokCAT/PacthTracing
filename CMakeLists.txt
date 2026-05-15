@@ -74,5 +74,5 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/lib/opencv_world4100.dll")
 endif()
 
 # ---- CUDA hello world 测试（验证环境后删）----
-add_executable(hello_cuda PathTracing/hello_cuda.cu)
+add_executable(hello_cuda PathTracing/cuda/hello_cuda.cu)
 target_compile_features(hello_cuda PRIVATE cuda_std_17)

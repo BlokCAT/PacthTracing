@@ -3,14 +3,10 @@
 #ifndef RAYTRACING_MATERIAL_H
 #define RAYTRACING_MATERIAL_H
 #include "Vector.hpp"
+#include "cuda/Material.cuh"   // enum MaterialType + GPU 端函数
 #include "Texture.hpp"
 #include <algorithm>
 #include <string>
-
-enum  MaterialType
-{
-	DIFFUSE , REFLC , MIRCO  , REFRACT ,BLENDER 
-};
 
 class Material
 {
