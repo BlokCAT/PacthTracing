@@ -5,7 +5,6 @@
 #define RAYTRACING_TRI_H
 #include <cmath>
 #include <array>
-#include <tuple>
 #include <iostream>
 #include "Material.hpp"
 #include "Vector.hpp"
@@ -56,8 +55,8 @@ public:
 
 	Vector3f getHitColor(const Vector3f& hitpos)
 	{
-		std::tuple<float, float, float> tup = computeBarycentric3D(node1, node2, node3, hitpos);
-		Vector2f hitUV = (TextureUV[0] * std::get<0>(tup)) + (TextureUV[1] * std::get<1>(tup)) + (TextureUV[2] * std::get<2>(tup));
+		float b1, b2, b3; computeBarycentric3D(node1, node2, node3, hitpos, b1, b2, b3);
+		Vector2f hitUV = (TextureUV[0] * b1) + (TextureUV[1] * b2) + (TextureUV[2] * b3);
 		if (m->isTexture)
 			return m->texture.getColorAt(hitUV.x, hitUV.y);
 		else
@@ -115,8 +114,8 @@ public:
 			{
 				
 				Vector3f hit = ray.Xt_pos(tmp_t);
-				std::tuple<float, float, float> tup = computeBarycentric3D(node1, node2, node3, hit);
-				Vector3f tempN = (NodeNormal[0] * std::get<0>(tup)) + (NodeNormal[1] * std::get<1>(tup)) + (NodeNormal[2] * std::get<2>(tup));
+				float c1, c2, c3; computeBarycentric3D(node1, node2, node3, hit, c1, c2, c3);
+				Vector3f tempN = (NodeNormal[0] * c1) + (NodeNormal[1] * c2) + (NodeNormal[2] * c3);
 				if (dotProduct(ray.dir, tempN) < 0)
 				{
 					res.distance = tmp_t;

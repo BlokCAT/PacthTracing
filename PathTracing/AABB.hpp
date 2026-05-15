@@ -24,7 +24,7 @@ public:
 		pMax = pmax; 
 		pMin = pmin;
 	}
-	bool IsHitbox(const Ray &ray)
+	CUHD bool IsHitbox(const Ray &ray)
 	{
 		float t_minx, t_miny, t_minz, t_maxx, t_maxy, t_maxz;
 		float time_in, time_out;
