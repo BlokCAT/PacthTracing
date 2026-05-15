@@ -19,7 +19,7 @@ int MAX_RENDER_DEPTH = 6;
 int sceneHW = 400;
 int isThread = 1;
 bool AntiAliasing = false; //反走样
-int useGPU = 0;
+int useGPU = 1;
 
 
 //没有导入的复杂obj,只有干净的墙体灯场景： CPU time: 41654 ；GPU time: 753 ms
@@ -31,11 +31,11 @@ GPU render : 400x400, 300 spp, 625 blocks x 256 threads
 GPU time : 206447 ms
 
 
-
+BVH is done!
+CPU time: 136728 ms====================================================] 100 %
 
 
 */
-
 //只使用自己的球体的GPU：1.2s ;CPU time: 78277 ms
 //
 int main()
@@ -43,7 +43,7 @@ int main()
 	_mkdir("../SHOW.assets/res");
 	time_t now = time(nullptr);
 	tm* t = localtime(&now);
-	snprintf(PATH, sizeof(PATH), "../SHOW.assets/res/spot0_%02d%02d_%02d%02d%02d.ppm",
+	snprintf(PATH, sizeof(PATH), "../SHOW.assets/res/spot1_%02d%02d_%02d%02d%02d.ppm",
 		t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
 
 	Scene scene(sceneHW, sceneHW,BVH );//w  h
@@ -51,9 +51,9 @@ int main()
 	Material* red = new Material(Vector3f(0.83, 0.1, 0.1), DIFFUSE);
 	red->ior = 1.3;
 	red->roughness = 0.2;
-	Material* green = new Material(Vector3f(0.14f, 0.45f, 0.091f), DIFFUSE); 
+	Material* green = new Material(Vector3f(0.14f, 0.45f, 0.091f), DIFFUSE);
 	green->ior = 5;
-	green->roughness = 0.5;	
+	green->roughness = 0.5;
 	Material* blue = new Material(Vector3f(0.14f, 0.15f, 0.51f), DIFFUSE);
 	green->ior = 5;
 	green->roughness = 0.5;
@@ -86,7 +86,7 @@ int main()
 	Plane L2(Vector3f(0.0, 12.3, 44.0), Vector3f(0.0, -1.0, 0.0), Vector3f(0, 0, 1.0), 8.1, light2);
 	Plane L3(Vector3f(8.1, 12.3, 35.6), Vector3f(0.0, -1.0, 0.0), Vector3f(0, 0, 1.0), 8.1, light2);
 
-	MeshTriangle back("../model\\Scene\\back.obj" , white, false); 
+	MeshTriangle back("../model\\Scene\\back.obj" , white, false);
 	MeshTriangle top("../model\\Scene\\top.obj", white, false);
 	MeshTriangle down("../model\\Scene\\down.obj", white, false);
 	MeshTriangle right("../model\\Scene\\right.obj", blue, false);
@@ -113,8 +113,8 @@ int main()
 
 	if (useGPU) {
 		std::vector<GPUTriangle>  gpuTriangles;
-			std::vector<GPUSphere>    gpuSpheres;
-			std::unordered_map<Object*, int> sphereMap;
+		std::vector<GPUSphere>    gpuSpheres;
+		std::unordered_map<Object*, int> sphereMap;
 		std::vector<GPUMaterial>  gpuMaterials;
 		std::unordered_map<Object*, std::pair<int,int>> triMap;
 		std::vector<int>          lightTriIndices;
@@ -188,9 +188,58 @@ int main()
 				sphereMap[obj] = sIdx;
 			}
 		}
-		auto gpuBVH = scene.bvh.flattenBVH(triMap, sphereMap);
-		printf("GPU: %zu tris, %zu mats, %zu BVH nodes, %d lights\n",
-		       gpuTriangles.size(), gpuMaterials.size(), gpuBVH.size(), (int)lightTriIndices.size());
+
+		// ---- 三角形级 BVH（每叶 ≤ 4 tris）----
+		// 废弃场景级 Object BVH，直接在 GPUTriangle 上构建更深更均匀的树
+		struct TriLeaf : public Object {
+			int s, n;
+			AABB b;
+			TriLeaf(int ss, int nn, const AABB& bb) : s(ss), n(nn), b(bb) {}
+			AABB getAABB() override { return b; }
+			float getAra() override { return 0; }
+			void getHitPoint(Ray&, HitPoint&) override {}
+			void setAABB() override {}
+			void SampleLight(HitPoint&, float&) override {}
+			Vector3f getHitColor(const Vector3f&) override { return Vector3f(0); }
+		};
+
+		std::vector<TriLeaf*> leaves;
+		std::vector<Object*>  leafPtrs;
+
+		for (int i = 0; i < (int)gpuTriangles.size(); i += 4) {
+			int cnt = (i + 4 <= (int)gpuTriangles.size())
+				? 4 : ((int)gpuTriangles.size() - i);
+			AABB mb = gpuTriangles[i].bounds;
+			for (int k = 1; k < cnt; k++)
+				mb = AmalgamateTowBox(mb, gpuTriangles[i + k].bounds);
+			auto* L = new TriLeaf(i, cnt, mb);
+			leaves.push_back(L);
+			leafPtrs.push_back(L);
+		}
+
+		std::vector<GPUBVHNode> gpuBVH;
+
+		if (leaves.size() <= 1) {
+			GPUBVHNode r;
+			r.bounds    = leaves.empty() ? AABB() : leaves[0]->b;
+			r.triStart  = leaves.empty() ? 0 : leaves[0]->s;
+			r.triCount  = leaves.empty() ? 0 : leaves[0]->n;
+			r.sphereIdx = -1;
+			gpuBVH.push_back(r);
+		} else {
+			BVHstruct b2(leafPtrs);
+			b2.BuiltBVH(1);
+			std::unordered_map<Object*, std::pair<int, int>> m2;
+			for (auto* L : leaves) m2[L] = { L->s, L->n };
+			gpuBVH = b2.flattenBVH(m2, sphereMap);
+		}
+
+		for (auto* L : leaves) delete L;
+
+		printf("GPU: %zu tris, %zu spheres, %zu mats, %zu BVH nodes, %d lights\n",
+			gpuTriangles.size(), gpuSpheres.size(), gpuMaterials.size(),
+			gpuBVH.size(), (int)lightTriIndices.size());
+
 		auto start = std::chrono::system_clock::now();
 		cudaRender(gpuTriangles, gpuSpheres, gpuMaterials, gpuBVH, lightTriIndices,
 		           scene.w, scene.h, spp, MAX_RENDER_DEPTH,
