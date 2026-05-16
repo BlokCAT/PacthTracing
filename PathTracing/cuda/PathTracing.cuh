@@ -97,6 +97,7 @@ CUHD Vector3f PathTracingGPU(
 	Vector3f L(0.0f);
 	Vector3f throughput(1.0f);
 	Ray ray = initialRay;
+	bool prevDidNEE = false;   // 上一轮是否做了 NEE
 
 	// ================================================================
 	// 主循环：每个 depth 对应一次 bounce
@@ -113,7 +114,7 @@ CUHD Vector3f PathTracingGPU(
 		// ----- 第 3 步：命中光源 → 累加光源辐射，路径终止 -----
 		const GPUMaterial& mat = materials[hp.materialIdx];
 		if (mat.islight) {
-			L = L + (throughput * mat.lightIntensity);
+			L = L + ((prevDidNEE ? Vector3f(0.0f) : throughput * mat.lightIntensity));
 			break;
 		}
 
@@ -291,13 +292,7 @@ CUHD Vector3f PathTracingGPU(
 		// 对于做了 NEE 的材质（DIFFUSE/MIRCO/BLENDER），半球随机采样的方向
 		// 有可能恰好击中光源——这会跟 NEE 重复计数。
 		// 故发一条探测光线：如果下个命中点是光源，就跳过（NEE 已经算过这段光了）。
-		if (mat.mtype != REFLC && mat.mtype != REFRACT) {
-			Ray nextRay(hitPos + (N * 0.0001f), futureDir);
-			GPUKitPoint nextHP;
-			BVHTraverse(nodes, rootIdx, triangles, spheres, materials, nextRay, nextHP);
-			if (nextHP.happened && materials[nextHP.materialIdx].islight)
-				break;
-		}
+				// NEE 双计检测已改为 prevDidNEE 标记法（见循环头）
 
 		// ----- 第 8 步：更新 throughput，构造下一根光线 -----
 		// throughput = 路径衰减因子

@@ -22,14 +22,6 @@ bool AntiAliasing = false; //反走样
 int useGPU = 1;
 
 
-//没有导入的复杂obj,只有干净的墙体灯场景： CPU time: 41654 ；GPU time: 753 ms
-/*
-导入了复杂obj:
-GPU time :  11668 ms
-CPU time:  136728 ms
-*/
-//只使用自己的球体的GPU：1.2s ;CPU time: 78277 ms
-//
 int main()
 {
 	_mkdir("../SHOW.assets/res");
