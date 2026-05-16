@@ -83,115 +83,110 @@ int BVHstruct::getnextTurn(int now)
 	return now + 1;
 }
 
-BVHnode* BVHstruct::recursiveBuildBVH(vector<Object*> objs, int tt) //当前需要创建的节点的
+// ---- AABB 表面积（不含常数因子 2，用于 SAH 比较）----
+static inline float AABB_SA(const AABB& box) {
+	float dx = box.pMax.x - box.pMin.x;
+	float dy = box.pMax.y - box.pMin.y;
+	float dz = box.pMax.z - box.pMin.z;
+	return dx*dy + dy*dz + dz*dx;  // 半表面积，比例等价
+}
+
+BVHnode* BVHstruct::recursiveBuildBVH(vector<Object*> objs, int tt) // SAH 构建
 {
 	BVHnode* new_node = new BVHnode();
-	AABB new_aabb;
-	if (objs.size() == 0)return nullptr;
-	else if (objs.size() == 1)
-	{
-		new_aabb = objs[0]->getAABB();
-		new_node->area += objs[0]->getAra();
-		new_node->nodeBox = new_aabb;
+	if (objs.size() == 0) return nullptr;
+
+	// 计算父节点包围盒 + 总面积
+	AABB parentBox = objs[0]->getAABB();
+	float totalArea = objs[0]->getAra();
+	for (int i = 1; i < (int)objs.size(); i++) {
+		parentBox = AmalgamateTowBox(parentBox, objs[i]->getAABB());
+		totalArea += objs[i]->getAra();
+	}
+
+	if (objs.size() == 1) {
+		new_node->nodeBox = parentBox;
+		new_node->area = totalArea;
 		new_node->objsCount = 1;
 		new_node->obj = objs[0];
-		//std::cout << "一个叶子节点\n";
 		return new_node;
 	}
-	else if (objs.size() == 2)
-	{
-		vector<Object*> rightObj;
-		vector<Object*> liftObj;
 
-		if (tt == 1)
-		{
-			if (objs[0]->getAABB().getCen().x > objs[1]->getAABB().getCen().x)
-			{
-				rightObj.push_back(objs[0]);
-				liftObj.push_back(objs[1]);
-			}
-			else
-			{
-				rightObj.push_back(objs[1]);
-				liftObj.push_back(objs[0]);
-			}
-		}
-		else if (tt == 2)
-		{
-			if (objs[0]->getAABB().getCen().y > objs[1]->getAABB().getCen().y)
-			{
-				rightObj.push_back(objs[0]);
-				liftObj.push_back(objs[1]);
-			}
-			else
-			{
-				rightObj.push_back(objs[1]);
-				liftObj.push_back(objs[0]);
-			}
-		}
-		else
-		{
-			if (objs[0]->getAABB().getCen().z > objs[1]->getAABB().getCen().z)
-			{
-				rightObj.push_back(objs[0]);
-				liftObj.push_back(objs[1]);
-			}
-			else
-			{
-				rightObj.push_back(objs[1]);
-				liftObj.push_back(objs[0]);
-			}
-		}
-		new_node->lift = recursiveBuildBVH(liftObj, getnextTurn(tt));
-		new_node->right = recursiveBuildBVH(rightObj, getnextTurn(tt));
+	// ======== SAH：扫所有切分点，选成本最低的 ========
+	float parentSA = AABB_SA(parentBox);
+	float bestCost = 1e30f;
+	int    bestAxis = 0;
+	int    bestSplit = 0;
 
-		new_node->area += (new_node->lift->area + new_node->right->area);
-		new_node->nodeBox = AmalgamateTowBox(new_node->lift->nodeBox, new_node->right->nodeBox);
-		new_node->objsCount += (new_node->lift->objsCount + new_node->right->objsCount);
+	for (int axis = 0; axis < 3; axis++) {
+		// 按当前轴排序
+		if (axis == 0) {
+			sort(objs.begin(), objs.end(), [](auto a, auto b) {
+				return a->getAABB().getCen().x < b->getAABB().getCen().x; });
+		} else if (axis == 1) {
+			sort(objs.begin(), objs.end(), [](auto a, auto b) {
+				return a->getAABB().getCen().y < b->getAABB().getCen().y; });
+		} else {
+			sort(objs.begin(), objs.end(), [](auto a, auto b) {
+				return a->getAABB().getCen().z < b->getAABB().getCen().z; });
+		}
+
+		// 从右往左扫，预存右半边的 AABB 和数量
+		AABB rightBox = objs.back()->getAABB();
+		vector<float> rightSA(objs.size());
+		rightSA.back() = AABB_SA(rightBox);
+		for (int i = (int)objs.size() - 2; i >= 0; i--) {
+			rightBox = AmalgamateTowBox(rightBox, objs[i]->getAABB());
+			rightSA[i] = AABB_SA(rightBox);
+		}
+
+		// 从左往右扫，算每个切分点的 SAH 成本
+		AABB leftBox = objs[0]->getAABB();
+		for (int split = 1; split < (int)objs.size(); split++) {
+			float cost = AABB_SA(leftBox) * (float)split
+			           + rightSA[split] * (float)(objs.size() - split);
+			if (cost < bestCost) {
+				bestCost = cost;
+				bestAxis = axis;
+				bestSplit = split;
+			}
+			leftBox = AmalgamateTowBox(leftBox, objs[split]->getAABB());
+		}
+	}
+
+	// 如果 SAH 认为叶子更省，或只有 2 个物体（强制分），直接做叶子
+	float leafCost = parentSA * (float)objs.size();
+	if (bestSplit == 0 || (bestCost >= leafCost && objs.size() <= 4)) {
+		// 小节点直接做叶子，把多个物体挂到一个节点上
+		new_node->nodeBox = parentBox;
+		new_node->area = totalArea;
+		new_node->objsCount = (int)objs.size();
+		new_node->obj = objs[0];  // 只存第一个，flatten 时通过 triMap 查区间
 		return new_node;
 	}
-	else
-	{
-		vector<Object*> rightObj;
-		vector<Object*> liftObj;
 
-		if (tt == 1)
-		{
-			sort(objs.begin(), objs.end(), [](auto a, auto b)
-				{
-					return a->getAABB().getCen().x < b->getAABB().getCen().x;
-				});
-		}
-		else if (tt == 2)
-		{
-			sort(objs.begin(), objs.end(), [](auto a, auto b)
-				{
-					return a->getAABB().getCen().y < b->getAABB().getCen().y;
-				});
-		}
-		else
-		{
-			sort(objs.begin(), objs.end(), [](auto a, auto b)
-				{
-					return a->getAABB().getCen().z < b->getAABB().getCen().z;
-				});
-		}
-
-		auto beginning = objs.begin();
-		auto middling = objs.begin() + (objs.size() / 2);
-		auto ending = objs.end();
-
-		liftObj = vector<Object*>(beginning , middling);
-		rightObj = vector<Object*>(middling, ending);
-
-		new_node->lift = recursiveBuildBVH(liftObj, getnextTurn(tt));
-		new_node->right = recursiveBuildBVH(rightObj, getnextTurn(tt));
-
-		new_node->area += (new_node->lift->area + new_node->right->area);
-		new_node->nodeBox = AmalgamateTowBox(new_node->lift->nodeBox, new_node->right->nodeBox);
-		new_node->objsCount += (new_node->lift->objsCount + new_node->right->objsCount);
-		return new_node;
+	// 按最佳轴重新排序
+	if (bestAxis == 0) {
+		sort(objs.begin(), objs.end(), [](auto a, auto b) {
+			return a->getAABB().getCen().x < b->getAABB().getCen().x; });
+	} else if (bestAxis == 1) {
+		sort(objs.begin(), objs.end(), [](auto a, auto b) {
+			return a->getAABB().getCen().y < b->getAABB().getCen().y; });
+	} else {
+		sort(objs.begin(), objs.end(), [](auto a, auto b) {
+			return a->getAABB().getCen().z < b->getAABB().getCen().z; });
 	}
+
+	vector<Object*> leftObjs (objs.begin(),            objs.begin() + bestSplit);
+	vector<Object*> rightObjs(objs.begin() + bestSplit, objs.end());
+
+	new_node->lift  = recursiveBuildBVH(leftObjs,  getnextTurn(tt));
+	new_node->right = recursiveBuildBVH(rightObjs, getnextTurn(tt));
+
+	new_node->area = new_node->lift->area + new_node->right->area;
+	new_node->nodeBox = AmalgamateTowBox(new_node->lift->nodeBox, new_node->right->nodeBox);
+	new_node->objsCount = new_node->lift->objsCount + new_node->right->objsCount;
+	return new_node;
 }
 
 void BVHstruct::gethitposition(Ray &ray, BVHnode *tree , HitPoint &hp)
