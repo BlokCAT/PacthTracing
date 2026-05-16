@@ -5,9 +5,9 @@
 #include "Material.cuh"
 #include "Triangle.cuh"
 
-// Host 端调用：组装 GPU 数据 → 启动 kernel → 取回 framebuffer → 写 PPM
 void cudaRender(
-	const std::vector<GPUTriangle>& cpuTriangles,
+	const std::vector<TriangleGeo>&  cpuGeo,
+	const std::vector<TriangleMeta>& cpuMeta,
 	const std::vector<GPUSphere>&    cpuSpheres,
 	const std::vector<GPUMaterial>&  cpuMaterials,
 	const std::vector<GPUBVHNode>&   cpuBVHNodes,

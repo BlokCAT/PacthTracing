@@ -77,10 +77,6 @@ int main()
 	MeshTriangle left("../model\\Scene\\left.obj", yellow, false);
 	MeshTriangle bunny("../model\\Scene\\spot.obj" , Refract, true);
 
-	//scene.Add(&triangle1);
-	//scene.Add(&triangle2);
-	//scene.Add(&b4);
-	//scene.Add(&b1);
 	scene.Add(&L);
 	scene.Add(&L2);
 	scene.Add(&L3);
@@ -93,37 +89,17 @@ int main()
 	scene.Add(&back);
 	scene.BuildAccl();
 
-	// ============================================================
-	//  GPU 渲染管线
-	//  分三步：
-	//    第 1 步 — 收集数据：把所有 CPU 物体转成 GPU 平面数组
-	//    第 2 步 — 重建 BVH：在三角形级别建一棵更深更均匀的树
-	//    第 3 步 — 启动渲染：cudaMemcpy → kernel launch → 取回 → 写盘
-	// ============================================================
-
+	// ========== GPU 渲染管线 ==========
 	if (useGPU) {
-		// ---- 第 1 步：准备 GPU 端数据容器 ----
-		// 这些 vector 存储的是"拍平后的连续数组"，后面会整块 cudaMemcpy 到 GPU
-		std::vector<GPUTriangle>  gpuTriangles;  // 全局三角形数组
-		std::vector<GPUSphere>    gpuSpheres;    // 全局球体数组
-		std::vector<GPUMaterial>  gpuMaterials;  // 全局材质数组
-
-		// triMap: Object* → (在 gpuTriangles 中的起始索引, 三角形个数)
-		// 仅用于重建 BVH 时查询每个叶子节点的三角形范围
+		std::vector<TriangleGeo>  gpuGeo;     // 热数据：顶点+AABB
+		std::vector<TriangleMeta> gpuMeta;    // 冷数据：法线+UV+材质索引
+		std::vector<GPUSphere>    gpuSpheres;
+		std::vector<GPUMaterial>  gpuMaterials;
 		std::unordered_map<Object*, std::pair<int,int>> triMap;
-
-		// sphereMap: Object* → 在 gpuSpheres 中的索引
-		// 重建 BVH 时告诉叶子"这个节点包含一个球体"
 		std::unordered_map<Object*, int> sphereMap;
-
-		// lightTriIndices: 光源三角形的索引列表（NEE 采样时随机选一个）
-		std::vector<int> lightTriIndices;
-
-		// matMap: CPU Material* → GPU materials[] 中的索引（去重用）
+		std::vector<int>          lightTriIndices;
 		std::unordered_map<Material*, int> matMap;
 
-		// ---- 辅助函数：把 CPU Material 转成 GPUMaterial ----
-		// 同一个 CPU Material 对象只转一次，后续直接用索引
 		auto getOrCreateMat = [&](Material* m) -> int {
 			auto it = matMap.find(m);
 			if (it != matMap.end()) return it->second;
@@ -139,61 +115,56 @@ int main()
 			return idx;
 		};
 
-		// ---- 遍历场景中所有物体，转成 GPU 格式 ----
 		for (Object* obj : scene.objs) {
 			MeshTriangle* mesh = dynamic_cast<MeshTriangle*>(obj);
 			Plane* plane = dynamic_cast<Plane*>(obj);
 
 			if (mesh) {
-				// ---- OBJ 模型 → GPUTriangle[] ----
-				// MeshTriangle 内部已经有拆好的 Triangle 列表，逐个拷贝
-				int start = (int)gpuTriangles.size();
+				int start = (int)gpuGeo.size();
 				for (auto& t : mesh->triangles) {
-					GPUTriangle gt;
-					gt.v0=t.node1; gt.v1=t.node2; gt.v2=t.node3;
-					gt.n0=t.NodeNormal[0]; gt.n1=t.NodeNormal[1]; gt.n2=t.NodeNormal[2];
-					gt.uv0=t.TextureUV[0]; gt.uv1=t.TextureUV[1]; gt.uv2=t.TextureUV[2];
-					gt.materialIdx = getOrCreateMat(t.m);
-					gt.faceNormal = t.N; gt.bounds = t.getAABB();
-					gt.isSmoothShading = t.isSmoothShading;
-					gpuTriangles.push_back(gt);
+					TriangleGeo geo;
+					geo.v0=t.node1; geo.v1=t.node2; geo.v2=t.node3;
+					geo.bounds = t.getAABB();
+					gpuGeo.push_back(geo);
+					TriangleMeta meta;
+					meta.n0=t.NodeNormal[0]; meta.n1=t.NodeNormal[1]; meta.n2=t.NodeNormal[2];
+					meta.uv0=t.TextureUV[0]; meta.uv1=t.TextureUV[1]; meta.uv2=t.TextureUV[2];
+					meta.materialIdx = getOrCreateMat(t.m);
+					meta.faceNormal = t.N;
+					meta.isSmoothShading = t.isSmoothShading;
+					gpuMeta.push_back(meta);
 				}
-				int cnt = (int)gpuTriangles.size() - start;
+				int cnt = (int)gpuGeo.size() - start;
 				if (cnt > 0) triMap[obj] = {start, cnt};
 
 			} else if (plane) {
-				// ---- 矩形平面 → 2 个 GPUTriangle ----
-				// 一个矩形 = 2 个三角面 (v1,v2,v3) + (v1,v3,v4)
-				int start = (int)gpuTriangles.size();
+				int start = (int)gpuGeo.size();
 				int matIdx = getOrCreateMat(plane->m);
 				Vector3f N = plane->N;
-				GPUTriangle t1, t2;
-				t1.v0=plane->node1; t1.v1=plane->node2; t1.v2=plane->node3;
-				t2.v0=plane->node1; t2.v1=plane->node3; t2.v2=plane->node4;
-				for (auto* pt : {&t1, &t2}) {
-					pt->n0=pt->n1=pt->n2=N;
-					pt->uv0=pt->uv1=pt->uv2=Vector2f(0,0);
-					pt->materialIdx=matIdx; pt->faceNormal=N; pt->isSmoothShading=false;
-					// 手动计算 AABB（取三个顶点的 min/max）
-					float mx=fmaxf(pt->v0.x,fmaxf(pt->v1.x,pt->v2.x));
-					float my=fmaxf(pt->v0.y,fmaxf(pt->v1.y,pt->v2.y));
-					float mz=fmaxf(pt->v0.z,fmaxf(pt->v1.z,pt->v2.z));
-					float nx=fminf(pt->v0.x,fminf(pt->v1.x,pt->v2.x));
-					float ny=fminf(pt->v0.y,fminf(pt->v1.y,pt->v2.y));
-					float nz=fminf(pt->v0.z,fminf(pt->v1.z,pt->v2.z));
-					pt->bounds = AABB(Vector3f(mx,my,mz), Vector3f(nx,ny,nz));
+				Vector3f triVerts[2][3] = {
+					{plane->node1,plane->node2,plane->node3},
+					{plane->node1,plane->node3,plane->node4} };
+				for (int ti = 0; ti < 2; ti++) {
+					TriangleGeo geo; geo.v0=triVerts[ti][0]; geo.v1=triVerts[ti][1]; geo.v2=triVerts[ti][2];
+					float mx=fmaxf(geo.v0.x,fmaxf(geo.v1.x,geo.v2.x));
+					float my=fmaxf(geo.v0.y,fmaxf(geo.v1.y,geo.v2.y));
+					float mz=fmaxf(geo.v0.z,fmaxf(geo.v1.z,geo.v2.z));
+					float nx=fminf(geo.v0.x,fminf(geo.v1.x,geo.v2.x));
+					float ny=fminf(geo.v0.y,fminf(geo.v1.y,geo.v2.y));
+					float nz=fminf(geo.v0.z,fminf(geo.v1.z,geo.v2.z));
+					geo.bounds = AABB(Vector3f(mx,my,mz), Vector3f(nx,ny,nz));
+					gpuGeo.push_back(geo);
+					TriangleMeta meta; meta.n0=meta.n1=meta.n2=N;
+					meta.uv0=meta.uv1=meta.uv2=Vector2f(0,0);
+					meta.materialIdx=matIdx; meta.faceNormal=N; meta.isSmoothShading=false;
+					gpuMeta.push_back(meta);
 				}
-				gpuTriangles.push_back(t1); gpuTriangles.push_back(t2);
 				triMap[obj] = {start, 2};
-				// 如果这个平面是光源 → 记录到 lightTriIndices
 				if (plane->m->islight) {
 					lightTriIndices.push_back(start);
 					lightTriIndices.push_back(start+1);
 				}
-
 			} else if (Boll* bollObj = dynamic_cast<Boll*>(obj)) {
-				// ---- 球体 → GPUSphere ----
-				// 不用拆三角形，GPU 端用解析公式直接求交
 				int sIdx = (int)gpuSpheres.size();
 				GPUSphere gs;
 				gs.center = bollObj->cen;
@@ -205,14 +176,9 @@ int main()
 			}
 		}
 
-		// ---- 第 2 步：重建 BVH（三角形级别）----
-		// 为什么废弃场景级 BVH？
-		//   场景 BVH 只有 19 个节点，每个叶子 ~300 个三角形
-		//   GPU warp 内 for 循环等最慢线程拖死所有人
-		// 改为每 ≤4 个三角形一个叶子 → ~2937 节点 → 叶子均匀 → warp 友好
+		// ---- 三角形级 BVH（每叶 ≤ 4 tris）----
 		struct TriLeaf : public Object {
-			int s, n;
-			AABB b;
+			int s, n; AABB b;
 			TriLeaf(int ss, int nn, const AABB& bb) : s(ss), n(nn), b(bb) {}
 			AABB getAABB() override { return b; }
 			float getAra() override { return 0; }
@@ -221,71 +187,46 @@ int main()
 			void SampleLight(HitPoint&, float&) override {}
 			Vector3f getHitColor(const Vector3f&) override { return Vector3f(0); }
 		};
-
 		std::vector<TriLeaf*> leaves;
 		std::vector<Object*>  leafPtrs;
-
-		// 把全局三角形数组按每 4 个一组打包成 BVH 叶子
-		for (int i = 0; i < (int)gpuTriangles.size(); i += 4) {
-			int cnt = (i + 4 <= (int)gpuTriangles.size())
-				? 4 : ((int)gpuTriangles.size() - i);
-			AABB mb = gpuTriangles[i].bounds;
-			for (int k = 1; k < cnt; k++)
-				mb = AmalgamateTowBox(mb, gpuTriangles[i + k].bounds);
+		for (int i = 0; i < (int)gpuGeo.size(); i += 4) {
+			int cnt = (i + 4 <= (int)gpuGeo.size()) ? 4 : ((int)gpuGeo.size() - i);
+			AABB mb = gpuGeo[i].bounds;
+			for (int k = 1; k < cnt; k++) mb = AmalgamateTowBox(mb, gpuGeo[i+k].bounds);
 			auto* L = new TriLeaf(i, cnt, mb);
-			leaves.push_back(L);
-			leafPtrs.push_back(L);
+			leaves.push_back(L); leafPtrs.push_back(L);
 		}
-
 		std::vector<GPUBVHNode> gpuBVH;
-
 		if (leaves.size() <= 1) {
-			// 场景太小，单节点 BVH
-			GPUBVHNode r;
-			r.bounds    = leaves.empty() ? AABB() : leaves[0]->b;
-			r.triStart  = leaves.empty() ? 0 : leaves[0]->s;
-			r.triCount  = leaves.empty() ? 0 : leaves[0]->n;
-			r.sphereIdx = -1;
-			gpuBVH.push_back(r);
+			GPUBVHNode r; r.bounds = leaves.empty() ? AABB() : leaves[0]->b;
+			r.triStart = leaves.empty() ? 0 : leaves[0]->s;
+			r.triCount = leaves.empty() ? 0 : leaves[0]->n;
+			r.sphereIdx = -1; gpuBVH.push_back(r);
 		} else {
-			// 用现有的 CPU BVH 构建器，但输入不再是 Object*，
-			// 而是我们包装的 TriLeaf 数组
-			BVHstruct b2(leafPtrs);
-			b2.BuiltBVH(1);
-			std::unordered_map<Object*, std::pair<int, int>> m2;
-			for (auto* L : leaves) m2[L] = { L->s, L->n };
-			// 拍平时融入 sphereMap → 球体也挂到 BVH 叶子
+			BVHstruct b2(leafPtrs); b2.BuiltBVH(1);
+			std::unordered_map<Object*, std::pair<int,int>> m2;
+			for (auto* L : leaves) m2[L] = {L->s, L->n};
 			gpuBVH = b2.flattenBVH(m2, sphereMap);
 		}
-
 		for (auto* L : leaves) delete L;
 
 		printf("GPU: %zu tris, %zu spheres, %zu mats, %zu BVH nodes, %d lights\n",
-			gpuTriangles.size(), gpuSpheres.size(), gpuMaterials.size(),
+			gpuGeo.size(), gpuSpheres.size(), gpuMaterials.size(),
 			gpuBVH.size(), (int)lightTriIndices.size());
 
-		// ---- 第 3 步：启动 GPU 渲染 ----
-		// cudaRender() 做的事：
-		//   cudaMalloc → cudaMemcpy(Host→Device) → renderKernel<<<>>>
-		//   → cudaDeviceSynchronize → cudaMemcpy(Device→Host) → PPM 写盘
 		auto start = std::chrono::system_clock::now();
-		cudaRender(gpuTriangles, gpuSpheres, gpuMaterials, gpuBVH, lightTriIndices,
+		cudaRender(gpuGeo, gpuMeta, gpuSpheres, gpuMaterials, gpuBVH, lightTriIndices,
 		           scene.w, scene.h, spp, MAX_RENDER_DEPTH,
 		           0.3f, -0.8f, 8.0f, tanf(M_PI/9.0f), PATH);
 		auto stop = std::chrono::system_clock::now();
 		std::cout << "GPU time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop-start).count() << " ms\n";
 	} else {
 	Renderer r;
-
-
-
 	auto start = std::chrono::system_clock::now();
 	r.Render(scene);
 	auto stop = std::chrono::system_clock::now();
-
 	std::cout << "CPU time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms\n";
 	}
 	delete red, green, blue, white, micro1, micro2, Refract, jinzi, jinzi2, micro_white, light1, yellow;
-
 	return 0;
 }

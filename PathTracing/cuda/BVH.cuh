@@ -23,7 +23,8 @@ struct GPUBVHNode {
 // ============================================================
 CUHD inline void BVHTraverse(
 	const GPUBVHNode* nodes, int rootIdx,
-	const GPUTriangle* triangles,
+	const TriangleGeo*  geo,
+	const TriangleMeta* meta,
 	const GPUSphere*    spheres,
 	const GPUMaterial* materials,
 	const Ray& ray, GPUKitPoint& hp)
@@ -42,7 +43,7 @@ CUHD inline void BVHTraverse(
 
 		// 三角形叶子
 		for (int i = 0; i < node.triCount; i++) {
-			TriangleIntersect(triangles, node.triStart + i, ray, hp, materials);
+			TriangleIntersect(geo, node.triStart + i, meta, ray, hp, materials);
 		}
 
 		// 球体叶子

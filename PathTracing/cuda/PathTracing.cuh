@@ -10,7 +10,7 @@
 //  返回采样点的几何信息和 PDF（概率密度）。
 //
 //  参数:
-//    lightTriIndices - 光源三角形在 triangles[] 中的索引数组
+//    lightTriIndices - 光源三角形在 geo[] 中的索引数组
 //    lightCount      - 光源三角形的总数
 //    triangles       - 全局三角形数组
 //    rng             - 本线程的随机数状态
@@ -19,7 +19,8 @@
 // ============================================================
 CUHD inline void PlaneSampleLight(
 	const int* lightTriIndices, int lightCount,
-	const GPUTriangle* triangles,
+	const TriangleGeo*  geo,
+	const TriangleMeta* meta,
 	RNGState& rng,
 	GPUKitPoint& hp, float& pdf)
 {
@@ -29,7 +30,9 @@ CUHD inline void PlaneSampleLight(
 	float gs = gpuRand(rng);
 	if (gs >= 1.0f) gs = 0.999f;
 	int idx = (int)(gs * (float)lightCount);
-	const GPUTriangle& tri = triangles[lightTriIndices[idx]];
+	int tIdx = lightTriIndices[idx];
+		const TriangleGeo&  triGeo = geo[tIdx];
+		const TriangleMeta& triM   = meta[tIdx];
 
 	// 第二步：在选中的三角形上均匀采样一个点（用重心坐标 + sqrt 映射）
 	float r1 = gpuRand(rng), r2 = gpuRand(rng);
@@ -39,13 +42,13 @@ CUHD inline void PlaneSampleLight(
 	float b3 = 1.0f - b1 - b2;
 
 	// 世界空间坐标
-	hp.hitcoord = (tri.v0 * b1) + (tri.v1 * b2) + (tri.v2 * b3);
-	hp.hitN     = tri.faceNormal;
-	hp.materialIdx = tri.materialIdx;
+	hp.hitcoord = (triGeo.v0 * b1) + (triGeo.v1 * b2) + (triGeo.v2 * b3);
+	hp.hitN     = triM.faceNormal;
+	hp.materialIdx = triM.materialIdx;
 	hp.happened = true;
 
 	// PDF = 选这个三角形的概率 × 在这个三角形里选到这个点的概率
-	float triArea = 0.5f * crossProduct(tri.v1 - tri.v0, tri.v2 - tri.v0).len();
+	float triArea = 0.5f * crossProduct(triGeo.v1 - triGeo.v0, triGeo.v2 - triGeo.v0).len();
 	pdf = (1.0f / (float)lightCount) * (1.0f / triArea);
 }
 
@@ -83,7 +86,8 @@ CUHD inline void PlaneSampleLight(
 // ============================================================
 CUHD Vector3f PathTracingGPU(
 	const GPUBVHNode* nodes, int rootIdx,
-	const GPUTriangle* triangles,
+	const TriangleGeo*  geo,
+	const TriangleMeta* meta,
 	const GPUSphere*    spheres,
 	const GPUMaterial* materials,
 	const int* lightTriIndices, int lightCount,
@@ -106,7 +110,7 @@ CUHD Vector3f PathTracingGPU(
 
 		// ----- 第 1 步：BVH 求交 -----
 		GPUKitPoint hp;
-		BVHTraverse(nodes, rootIdx, triangles, spheres, materials, ray, hp);
+		BVHTraverse(nodes, rootIdx, geo, meta, spheres, materials, ray, hp);
 
 		// ----- 第 2 步：没命中任何物体 → 终止（后续可返回 HDRI 环境颜色）-----
 		if (!hp.happened) break;
@@ -138,7 +142,7 @@ CUHD Vector3f PathTracingGPU(
 		if (mat.mtype != REFLC && mat.mtype != REFRACT) {
 			float pdf_L = 0.0f;
 			GPUKitPoint sampleLP;
-			PlaneSampleLight(lightTriIndices, lightCount, triangles, rng, sampleLP, pdf_L);
+			PlaneSampleLight(lightTriIndices, lightCount, geo, meta, rng, sampleLP, pdf_L);
 
 			if (pdf_L > 0.0001f) {
 				// 构造 shadow ray：从命中点指向光源采样点
@@ -148,7 +152,7 @@ CUHD Vector3f PathTracingGPU(
 
 				// 检测有没有遮挡
 				GPUKitPoint shadowHP;
-				BVHTraverse(nodes, rootIdx, triangles, spheres, materials, shadowRay, shadowHP);
+				BVHTraverse(nodes, rootIdx, geo, meta, spheres, materials, shadowRay, shadowHP);
 
 				// 无遮挡 → 累加直接光贡献
 				if (shadowHP.happened && materials[shadowHP.materialIdx].islight) {
@@ -232,7 +236,7 @@ CUHD Vector3f PathTracingGPU(
 
 				Ray innerRay(hitPos - (N * 0.001f), refractIn);
 				GPUKitPoint innerHP;
-				BVHTraverse(nodes, rootIdx, triangles, spheres, materials, innerRay, innerHP);
+				BVHTraverse(nodes, rootIdx, geo, meta, spheres, materials, innerRay, innerHP);
 				if (!innerHP.happened) break;
 
 				// 第 2 段：在物体内部找到背面的命中点，折射射出

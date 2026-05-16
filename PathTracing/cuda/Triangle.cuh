@@ -3,46 +3,71 @@
 #include "Vector.cuh"
 #include "HitPoint.cuh"
 #include "Ray.cuh"
-#include "Material.cuh"     // GPUMaterial, MaterialType
-#include "../AABB.hpp"      // AABB::IsHitbox (CUHD)
-#include "../Tool.hpp"      // computeBarycentric3D, clamp, solveEquation (CUHD)
+#include "Material.cuh"
+#include "../AABB.hpp"
+#include "../Tool.hpp"
 
-struct GPUTriangle {
+// ============================================================
+//  TriangleGeo — 热数据：求交时需要，BVH 遍历频繁读取
+//  v0/v1/v2: Möller-Trumbore 算法用
+//  bounds:   BVH 叶子 AABB 粗筛用
+//  总大小: 3×12 + 24 = 60 字节（原 GPUTriangle 140 字节）
+// ============================================================
+struct TriangleGeo {
 	Vector3f v0, v1, v2;
-	Vector3f n0, n1, n2;
-	Vector2f uv0, uv1, uv2;
-	int      materialIdx;
-	Vector3f faceNormal;
 	AABB     bounds;
+};
+
+// ============================================================
+//  TriangleMeta — 冷数据：只在命中后才读
+//  法线用于平滑着色，UV 用于纹理，materialIdx 索引材质数组
+// ============================================================
+struct TriangleMeta {
+	Vector3f n0, n1, n2;       // 顶点法线
+	Vector2f uv0, uv1, uv2;    // 纹理 UV
+	Vector3f faceNormal;       // 面法线
+	int      materialIdx;      // 材质索引
 	bool     isSmoothShading;
 };
 
-CUHD inline Vector3f TriangleGetColor(  //得到三角形的集中点颜色：需要传递整个纹理数组
-	const GPUTriangle& tri, const Vector3f& hitpos,
+// ============================================================
+//  TriangleGetColor — 重心坐标插值颜色（命中后调用）
+// ============================================================
+CUHD inline Vector3f TriangleGetColor(
+	const TriangleGeo* geo, const TriangleMeta* meta, int triIdx,
+	const Vector3f& hitpos,
 	const GPUMaterial* materials)
 {
+	const TriangleGeo&  g = geo[triIdx];
+	const TriangleMeta& m = meta[triIdx];
 	float b1, b2, b3;
-	computeBarycentric3D(tri.v0, tri.v1, tri.v2, hitpos, b1, b2, b3);
-	Vector2f hitUV = (tri.uv0 * b1) + (tri.uv1 * b2) + (tri.uv2 * b3);
-	const GPUMaterial& mat = materials[tri.materialIdx];
+	computeBarycentric3D(g.v0, g.v1, g.v2, hitpos, b1, b2, b3);
+	Vector2f hitUV = (m.uv0 * b1) + (m.uv1 * b2) + (m.uv2 * b3);
+	const GPUMaterial& mat = materials[m.materialIdx];
 	if (mat.isTexture) {
-		return mat.Kd * (hitUV.x * hitUV.y);  // placeholder
+		return mat.Kd * (hitUV.x * hitUV.y);
 	}
 	return mat.Kd;
 }
 
+// ============================================================
+//  TriangleIntersect — Möller-Trumbore 求交（只收热数据）
+// ============================================================
 CUHD inline bool TriangleIntersect(
-	const GPUTriangle* triangles, int triIdx,
+	const TriangleGeo* geo, int triIdx,
+	const TriangleMeta* meta,
 	const Ray& ray, GPUKitPoint& hp,
 	const GPUMaterial* materials)
 {
-	const GPUTriangle& tri = triangles[triIdx];
+	const TriangleGeo& g = geo[triIdx];
 
-	if (!tri.bounds.IsHitbox(ray)) return false;
+	// AABB 粗筛
+	if (!g.bounds.IsHitbox(ray)) return false;
 
-	Vector3f E1 = tri.v1 - tri.v0;
-	Vector3f E2 = tri.v2 - tri.v0;
-	Vector3f S  = ray.pos - tri.v0;
+	// Möller-Trumbore
+	Vector3f E1 = g.v1 - g.v0;
+	Vector3f E2 = g.v2 - g.v0;
+	Vector3f S  = ray.pos - g.v0;
 	Vector3f S1 = crossProduct(ray.dir, E2);
 	Vector3f S2 = crossProduct(S, E1);
 
@@ -59,29 +84,29 @@ CUHD inline bool TriangleIntersect(
 	if (b1 + b2 >= 1.0f) return false;
 	if (t <= 0.0f || t >= hp.distance) return false;
 
-	// fill hit info
+	// ---- 命中！填充 HitPoint ----
 	hp.distance = t;
 	hp.happened = true;
 	hp.hitcoord = ray.Xt_pos(t);
-	hp.materialIdx = tri.materialIdx;
+	hp.materialIdx = meta[triIdx].materialIdx;
 
-	// normal
-	if (!tri.isSmoothShading) {
-		bool backFace = dotProduct(ray.dir, tri.faceNormal) > 0.0f;
-		// light sources are single-sided (back face = no hit)
-		if (backFace && materials[tri.materialIdx].islight) {
+	// 法线计算（读冷数据 meta）
+	const TriangleMeta& m = meta[triIdx];
+	if (!m.isSmoothShading) {
+		bool backFace = dotProduct(ray.dir, m.faceNormal) > 0.0f;
+		if (backFace && materials[m.materialIdx].islight) {
 			hp.happened = false;
 			return false;
 		}
-		hp.hitN = backFace ? (tri.faceNormal * -1.0f) : tri.faceNormal;
+		hp.hitN = backFace ? (m.faceNormal * -1.0f) : m.faceNormal;
 	} else {
 		float c1, c2, c3;
-		computeBarycentric3D(tri.v0, tri.v1, tri.v2, hp.hitcoord, c1, c2, c3);
-		Vector3f interpN = (tri.n0 * c1) + (tri.n1 * c2) + (tri.n2 * c3);
+		computeBarycentric3D(g.v0, g.v1, g.v2, hp.hitcoord, c1, c2, c3);
+		Vector3f interpN = (m.n0 * c1) + (m.n1 * c2) + (m.n2 * c3);
 
 		if (dotProduct(ray.dir, interpN) < 0.0f) {
 			hp.hitN = interpN;
-		} else if (materials[tri.materialIdx].mtype == REFRACT) {
+		} else if (materials[m.materialIdx].mtype == REFRACT) {
 			hp.hitN = interpN * -1.0f;
 		} else {
 			hp.happened = false;
@@ -89,6 +114,6 @@ CUHD inline bool TriangleIntersect(
 		}
 	}
 
-	hp.hitColor = TriangleGetColor(tri, hp.hitcoord, materials);
+	hp.hitColor = TriangleGetColor(geo, meta, triIdx, hp.hitcoord, materials);
 	return true;
 }
