@@ -67,7 +67,7 @@ void cudaRender(
 	const std::vector<GPUSphere>&    cpuSpheres,
 	const std::vector<GPUMaterial>&  cpuMaterials,
 	const std::vector<GPUBVHNode>&   cpuBVHNodes,
-	const std::vector<int>&          lightTriIndices,
+	const std::vector<int> & lightTriIndices,
 	int width, int height, int spp, int maxDepth,
 	float eyeX, float eyeY, float eyeZ,
 	float halfFOV,

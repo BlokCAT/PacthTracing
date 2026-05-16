@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Triangle.cuh"
+#include "Sphere.cuh"
 #include "../AABB.hpp"
 
 // ============================================================
@@ -8,60 +9,17 @@
 //  叶子可同时含三角形区间和球体索引
 // ============================================================
 struct GPUBVHNode {
-	AABB bounds;
+	AABB bounds;           // 当前节点及子树的包围盒
 	int  leftChild  = -1;
 	int  rightChild = -1;
-	int  triStart   = 0;
-	int  triCount   = 0;       // 三角形个数（0=内部节点或纯球体叶子）
-	int  sphereIdx  = -1;      // 球体索引（-1=不含球体）
-	int  padding;
+	int  triStart   = 0;   // 三角形数组起始索引
+	int  triCount   = 0;   // 三角形个数（0 = 内部节点或纯球体叶子）
+	int  sphereIdx  = -1;  // 球体索引（-1 = 不含球体）
+	int  padding;          // 对齐
 };
 
 // ============================================================
-//  GPUSphere — GPU 端球体数据
-// ============================================================
-struct GPUSphere {
-	Vector3f center;
-	float    radius;
-	int      materialIdx;
-	AABB     bounds;
-};
-
-// 球体求交（跟 CPU Boll::getHitPoint 一致）
-CUHD inline bool SphereIntersect(
-	const GPUSphere& sphere,
-	const Ray& ray, GPUKitPoint& hp,
-	const GPUMaterial* materials)
-{
-	Vector3f oc = ray.pos - sphere.center;
-	float a = dotProduct(ray.dir, ray.dir);
-	float b = 2.0f * dotProduct(oc, ray.dir);
-	float c = dotProduct(oc, oc) - sphere.radius * sphere.radius;
-
-	float det = b * b - 4.0f * a * c;
-	if (det < 0.0f) return false;
-
-	float sqrtDet = sqrtf(det);
-	float t1 = (-b - sqrtDet) / (2.0f * a);
-	float t2 = (-b + sqrtDet) / (2.0f * a);
-
-	float t = (t1 > 0.02f) ? t1 : t2;
-	if (t <= 0.02f || t >= hp.distance) return false;
-
-	Vector3f hitCoord = ray.Xt_pos(t);
-	Vector3f normal = hitCoord - sphere.center;
-
-	hp.distance = t;
-	hp.happened = true;
-	hp.hitcoord = hitCoord;
-	hp.hitN = (dotProduct(ray.dir, normal) < 0.0f) ? normal : (normal * -1.0f);
-	hp.materialIdx = sphere.materialIdx;
-	hp.hitColor = materials[sphere.materialIdx].Kd;
-	return true;
-}
-
-// ============================================================
-//  BVH 遍历（迭代，显式栈）
+//  BVH 遍历（迭代，显式栈，无递归）
 // ============================================================
 CUHD inline void BVHTraverse(
 	const GPUBVHNode* nodes, int rootIdx,
@@ -74,9 +32,9 @@ CUHD inline void BVHTraverse(
 
 	int stack[64];
 	int ptr = 0;
-	stack[ptr++] = rootIdx;
+	stack[ptr++] = rootIdx; //先把根节点入栈
 
-	while (ptr > 0) {
+	while (ptr > 0) { //当栈不空
 		int nodeIdx = stack[--ptr];
 		const GPUBVHNode& node = nodes[nodeIdx];
 

@@ -15,15 +15,15 @@ enum MaterialType {
 //  对应 CPU 端 Material，但去掉了 string/Texture/SetLight
 // ============================================================
 struct GPUMaterial {
-	int    mtype = DIFFUSE;
-	Vector3f Kd, Ks, Ka;
-	bool   islight = false;
+	int    mtype = DIFFUSE;   //什么类型的材质
+	Vector3f Kd, Ks, Ka;  //材质基本属性，漫反射，镜面反射颜色，环境观颜色
+	bool   islight = false;  
 	bool   isTexture = false;
-	float  roughness = 0.0f;
-	float  ior = 0.0f;
-	int    Illum = 2;
-	float  Ns = 0.0f;
-	Vector3f lightIntensity;
+	float  roughness = 0.0f;  //粗糙度
+	float  ior = 0.0f;//折射率
+	int    Illum = 2;  //illum 模型编号
+	float  Ns = 0.0f; //反射指数（specular exponent）
+	Vector3f lightIntensity;//光强
 };
 
 // ============================================================
@@ -96,8 +96,7 @@ CUHD inline void cuda_fresnel(const Vector3f& in, const Vector3f& N, float ior, 
 // ============================================================
 //  方向采样（需要随机数）— 多一个 RNGState& 参数
 // ============================================================
-CUHD inline Vector3f GetFutureDir(const Vector3f& wi, const Vector3f& N,
-                                   int mtype, RNGState& rng) {
+CUHD inline Vector3f GetFutureDir(const Vector3f& wi, const Vector3f& N,int mtype, RNGState& rng) {
 	switch (mtype) {
 	case MIRCO:
 	case DIFFUSE: {

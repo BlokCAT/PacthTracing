@@ -34,7 +34,7 @@ CUHD inline void computeBarycentric3D(
 }
 
 // ============================================================
-//  随机数 — GPU 占位接口（写 kernel 时对接 curand）
+//  随机数 
 // ============================================================
 struct RNGState {
 	unsigned long long state;

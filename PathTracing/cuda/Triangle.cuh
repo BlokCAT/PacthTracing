@@ -7,9 +7,6 @@
 #include "../AABB.hpp"      // AABB::IsHitbox (CUHD)
 #include "../Tool.hpp"      // computeBarycentric3D, clamp, solveEquation (CUHD)
 
-// ============================================================
-//  GPUTriangle -- GPU triangle data (POD)
-// ============================================================
 struct GPUTriangle {
 	Vector3f v0, v1, v2;
 	Vector3f n0, n1, n2;
@@ -20,10 +17,7 @@ struct GPUTriangle {
 	bool     isSmoothShading;
 };
 
-// ============================================================
-//  Hit color (no texture for now, uses Kd)
-// ============================================================
-CUHD inline Vector3f TriangleGetColor(
+CUHD inline Vector3f TriangleGetColor(  //得到三角形的集中点颜色：需要传递整个纹理数组
 	const GPUTriangle& tri, const Vector3f& hitpos,
 	const GPUMaterial* materials)
 {
@@ -37,9 +31,6 @@ CUHD inline Vector3f TriangleGetColor(
 	return mat.Kd;
 }
 
-// ============================================================
-//  Moller-Trumbore intersection (GPU, no std::tuple / std::array)
-// ============================================================
 CUHD inline bool TriangleIntersect(
 	const GPUTriangle* triangles, int triIdx,
 	const Ray& ray, GPUKitPoint& hp,

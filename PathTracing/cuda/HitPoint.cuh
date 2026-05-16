@@ -9,7 +9,7 @@ public:
 	Vector3f hitN;
 	float distance;
 	bool happened = false;
-	Vector3f hitColor;
+	Vector3f hitColor;  
 
 	CUHD GPUKitPoint() : distance(3.402823e+38f) {}  // FLT_MAX
 };
