@@ -7,6 +7,7 @@
 #include <cmath>
 #include <random>
 #include <iostream>
+#include <tuple>
 #undef M_PI
 #define M_PI 3.141592653589793f
 #undef RussianRoulette
@@ -19,6 +20,16 @@ CUHD inline float clamp(const float &lo, const float &hi, const float &v) {
 CUHD inline float TriangleArea(const Vector3f& v1, const Vector3f& v2, const Vector3f& v3) {
 	Vector3f e1 = v2 - v1, e2 = v3 - v1;
 	return fabsf(0.5f * crossProduct(e1, e2).len());
+}
+
+// 旧版 computeBarycentric3D（tuple 返回，CPU 兼容）
+CUHD inline std::tuple<float, float, float> computeBarycentric3D(
+	const Vector3f& v1, const Vector3f& v2, const Vector3f& v3, const Vector3f& hit)
+{
+	float AllArea = TriangleArea(v1, v2, v3);
+	return { TriangleArea(hit, v2, v3) / AllArea,
+			TriangleArea(hit, v1, v3) / AllArea,
+			TriangleArea(hit, v2, v1) / AllArea };
 }
 
 CUHD inline bool sloveEquation(float a, float b, float c, float &t1, float &t2) {

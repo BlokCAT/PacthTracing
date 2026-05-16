@@ -12,14 +12,14 @@
 #include "cuda/kernel.cuh"
 #include <ctime>
 #include <direct.h>
-int spp = 300;
+int spp = 100;
 char PATH[999];
 string HDRIPATH = "../model\\HDRI\\room.jpg";
 int MAX_RENDER_DEPTH = 6;
-int sceneHW = 400;
+int sceneHW = 200;
 int isThread = 1;
 bool AntiAliasing = false; //反走样
-int useGPU = 1;
+int useGPU = 0;
 
 
 int main()
@@ -27,7 +27,7 @@ int main()
 	_mkdir("../SHOW.assets/res");
 	time_t now = time(nullptr);
 	tm* t = localtime(&now);
-	snprintf(PATH, sizeof(PATH), "../SHOW.assets/res/spot1_%02d%02d_%02d%02d%02d.ppm",
+	snprintf(PATH, sizeof(PATH), "../SHOW.assets/res/spot0_%02d%02d_%02d%02d%02d.ppm",
 		t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
 
 	Scene scene(sceneHW, sceneHW,BVH );//w  h
