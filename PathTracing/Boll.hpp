@@ -6,6 +6,7 @@
 #include "Object.hpp"
 #include "Vector.hpp"
 #include "Material.hpp"
+#include "Transform.hpp"
 #include <iostream>
 
 
@@ -35,6 +36,13 @@ public:
 	{
 		cen = c;
 		r = rr;
+		m = mm;
+		setAABB();
+	}
+	// Transform 版本
+	Boll(float rr, Material* mm, const Transform& t) {
+		cen = t.position;
+		r = rr * t.scale.x;
 		m = mm;
 		setAABB();
 	}

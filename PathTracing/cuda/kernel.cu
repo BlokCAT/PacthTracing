@@ -11,8 +11,7 @@ __global__ void renderKernel(
 	const GPUMaterial*  materials,
 	const int*          lightTriIndices, int lightCount,
 	int width, int height, int spp, int maxDepth,
-	float eyeX, float eyeY, float eyeZ,
-	float halfFOV,
+	Camera cam,
 	float3* framebuffer,
 	unsigned long long* randSeeds)
 {
@@ -26,19 +25,10 @@ __global__ void renderKernel(
 	RNGState rng;
 	rng.state = randSeeds[idx];
 
-	float eryPixer = halfFOV / (float)(height / 2);
-	float x = (float)j * eryPixer + (eryPixer / 2.0f);
-	float y = (float)i * eryPixer + (eryPixer / 2.0f);
-	y = 2.0f * halfFOV - y;
-	x = x - halfFOV;
-	y = y - halfFOV;
-
-	Vector3f eyePos(eyeX, eyeY, eyeZ);
 	Vector3f color(0.0f);
 
 	for (int k = 0; k < spp; k++) {
-		Vector3f dir(x, y, 0.6f);
-		Ray ray(eyePos, dir);
+		Ray ray = cam.generateRay(i, j, width, height);
 		color = color + PathTracingGPU(
 			nodes, rootIdx, geo, meta, spheres, materials,
 			lightTriIndices, lightCount,
@@ -60,8 +50,7 @@ void cudaRender(
 	const std::vector<GPUBVHNode>&   cpuBVHNodes,
 	const std::vector<int> & lightTriIndices,
 	int width, int height, int spp, int maxDepth,
-	float eyeX, float eyeY, float eyeZ,
-	float halfFOV,
+	const Camera& cam,
 	const char* outputPath)
 {
 	int totalPix = width * height;
@@ -106,7 +95,7 @@ void cudaRender(
 		d_geo, d_meta, d_spheres, d_materials,
 		d_lightIndices, (int)lightTriIndices.size(),
 		width, height, spp, maxDepth,
-		eyeX, eyeY, eyeZ, halfFOV,
+		cam,
 		d_framebuffer, d_randSeeds);
 
 	cudaDeviceSynchronize();

@@ -51,7 +51,7 @@ if(MSVC)
     # /utf-8 仅用于 C++ 编译（nvcc 不认识），CUDA 通过 -Xcompiler 传递
     target_compile_options(PathTracing PRIVATE
         $<$<COMPILE_LANGUAGE:CXX>:/utf-8>
-        $<$<COMPILE_LANGUAGE:CUDA>:-Xcompiler=/utf-8>
+        $<$<COMPILE_LANGUAGE:CUDA>:-Xcompiler=/utf-8 --expt-relaxed-constexpr>
     )
 endif()
 

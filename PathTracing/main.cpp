@@ -10,16 +10,17 @@
 #include "MeshTriangle.hpp"
 #include "Texture.hpp"
 #include "cuda/kernel.cuh"
+#include "Camera.hpp"
 #include <ctime>
 #include <direct.h>
-int spp = 100;
+int spp = 250;
 char PATH[999];
 string HDRIPATH = "../model\\HDRI\\room.jpg";
 int MAX_RENDER_DEPTH = 6;
-int sceneHW = 200;
+int sceneHW = 400;
 int isThread = 1;
 bool AntiAliasing = false; //反走样
-int useGPU = 0;
+int useGPU = 1;
 
 
 int main()
@@ -75,7 +76,7 @@ int main()
 	MeshTriangle down("../model\\Scene\\down.obj", white, false);
 	MeshTriangle right("../model\\Scene\\right.obj", blue, false);
 	MeshTriangle left("../model\\Scene\\left.obj", yellow, false);
-	MeshTriangle bunny("../model\\Scene\\spot.obj" , Refract, true);
+	MeshTriangle bunny("../model\\Scene\\spot.obj" , red , true);
 
 	scene.Add(&L);
 	scene.Add(&L2);
@@ -88,6 +89,8 @@ int main()
 	scene.Add(&bunny);
 	scene.Add(&back);
 	scene.BuildAccl();
+
+	Camera cam;  // 默认值匹配旧硬编码: pos(0.3,-0.8,8), fov=40, lookAt沿+Z
 
 	// ========== GPU 渲染管线 ==========
 	if (useGPU) {
@@ -216,14 +219,13 @@ int main()
 
 		auto start = std::chrono::system_clock::now();
 		cudaRender(gpuGeo, gpuMeta, gpuSpheres, gpuMaterials, gpuBVH, lightTriIndices,
-		           scene.w, scene.h, spp, MAX_RENDER_DEPTH,
-		           0.3f, -0.8f, 8.0f, tanf(M_PI/9.0f), PATH);
+		           scene.w, scene.h, spp, MAX_RENDER_DEPTH, cam, PATH);
 		auto stop = std::chrono::system_clock::now();
 		std::cout << "GPU time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop-start).count() << " ms\n";
 	} else {
 	Renderer r;
 	auto start = std::chrono::system_clock::now();
-	r.Render(scene);
+	r.Render(scene, cam);
 	auto stop = std::chrono::system_clock::now();
 	std::cout << "CPU time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count() << " ms\n";
 	}

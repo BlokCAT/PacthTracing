@@ -5,6 +5,7 @@
 #include "Triangle.hpp"
 #include "BVHStruct.hpp"
 #include "OBJ_Loader.h"
+#include "Transform.hpp"
 #include <array>
 
 class MeshTriangle :public Object
@@ -181,9 +182,23 @@ public:
 		}
 	}
 
+	// Transform 构造函数：加载 OBJ 后对所有顶点应用变换
+	MeshTriangle(const string &path, Material* _m, bool _isSmoothShading, const Transform& t)
+		: MeshTriangle(path, _m, _isSmoothShading) { applyTransform(t); }
+	MeshTriangle(const string &path, bool _isSmoothShading, const Transform& t)
+		: MeshTriangle(path, _isSmoothShading) { applyTransform(t); }
+
 	~MeshTriangle()
 	{
 		delete tempMat;
+	}
+
+	void applyTransform(const Transform& t) {
+		for (auto& tri : triangles) {
+			tri.node1 = t.apply(tri.node1);
+			tri.node2 = t.apply(tri.node2);
+			tri.node3 = t.apply(tri.node3);
+		}
 	}
 
 	Vector3f getHitColor(const Vector3f &hitpos)

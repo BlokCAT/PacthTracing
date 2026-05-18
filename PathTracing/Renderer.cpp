@@ -17,15 +17,14 @@ float Renderer::Crad(float deg)
 }
 
 
-void Renderer::Render( Scene &scene)
+void Renderer::Render( Scene &scene, const Camera& cam)
 {
-	const static Vector3f eyes( 0.3 , -0.8 , 8 );
 	thread* th = new thread[scene.h];
 	int progress = 0;
 	int totalPix = scene.w * scene.h;
 	std::vector<Vector3f> frbuf(totalPix);
 	if (isThread == 1)
-	{		
+	{
 		std::mutex mtx1, mtx2;
 		int POINT = totalPix / 50;
 
@@ -35,25 +34,18 @@ void Renderer::Render( Scene &scene)
 				{
 					for (int j = 0; j < scene.w; j++)
 					{
-						float halfH = std::tan(M_PI / 9.0);
-						float eryPixer = halfH / (scene.h / 2.0);
-						float x = (float)j * eryPixer + (eryPixer / 2.0);
-						float y = (float)i * eryPixer + (eryPixer / 2.0);
-						y = 2.0 * halfH - y;
-						x = x - halfH;
-						y = y - halfH;
-
 						for (int k = 0; k < spp; k++)
 						{
+							Ray ray = cam.generateRay(i, j, scene.w, scene.h);
 							if (AntiAliasing)
 							{
-								float AntiAliasingOffset = (eryPixer / 2.0) * (RandomFloat() - 0.5);
-								
-								x = x  +  AntiAliasingOffset;
-								y = y  +  AntiAliasingOffset;
-							}		
-							Vector3f dir(x, y, 0.6);
-							Ray ray(eyes, dir); 
+								float offsetX = (RandomFloat() - 0.5f);
+								float offsetY = (RandomFloat() - 0.5f);
+								ray = cam.generateRay(
+									(int)((float)i + offsetX),
+									(int)((float)j + offsetY),
+									scene.w, scene.h);
+							}
 							Vector3f temp = (scene.PathTracing(ray, 0) / spp);
 							int idx = (i * scene.w) + j;
 							{
@@ -84,24 +76,14 @@ void Renderer::Render( Scene &scene)
 		{
 			for (int j = 0; j < scene.w; j++)
 			{
-				float halfH = std::tan(M_PI / 9.0);
-				float eryPixer = halfH / (scene.h / 2.0);
-				float x = (float)j * eryPixer + (eryPixer / 2.0);
-				float y = (float)i * eryPixer + (eryPixer / 2.0);
-				y = 2.0 * halfH - y;
-				x = x - halfH;
-				y = y - halfH;
-
-				for (int k = 0; k < spp; k++)
+								for (int k = 0; k < spp; k++)
 				{
-					if (AntiAliasing)
-					{
-						float AntiAliasingOffset = (eryPixer / 2) * RandomFloat();
-						x = x - (eryPixer / 4.0) + AntiAliasingOffset;
-						y = y - (eryPixer / 4.0) + AntiAliasingOffset;
+					Ray ray = cam.generateRay(i, j, scene.w, scene.h);
+					if (AntiAliasing) {
+						float offX = (RandomFloat() - 0.5f);
+						float offY = (RandomFloat() - 0.5f);
+						ray = cam.generateRay((int)((float)i + offX), (int)((float)j + offY), scene.w, scene.h);
 					}
-					Vector3f dir(x, y, 1.0);
-					Ray ray(eyes, dir);
 					frbuf[idx] = frbuf[idx] + (scene.PathTracing(ray, 0) / spp);
 				}
 				idx++;

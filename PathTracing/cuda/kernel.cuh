@@ -4,6 +4,7 @@
 #include "BVH.cuh"
 #include "Material.cuh"
 #include "Triangle.cuh"
+#include "Camera.cuh"
 
 void cudaRender(
 	const std::vector<TriangleGeo>&  cpuGeo,
@@ -13,6 +14,5 @@ void cudaRender(
 	const std::vector<GPUBVHNode>&   cpuBVHNodes,
 	const std::vector<int>&          lightTriIndices,
 	int width, int height, int spp, int maxDepth,
-	float eyeX, float eyeY, float eyeZ,
-	float halfFOV,
+	const Camera& cam,
 	const char* outputPath);
