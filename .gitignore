@@ -26,6 +26,7 @@ build/
 
 # Output PPM images (too large)
 SHOW.assets/*.ppm
+SHOW.assets/res/*.ppm
 
 # OpenCV runtime DLLs (not portable, get from official release)
 lib/opencv_world4100.dll
